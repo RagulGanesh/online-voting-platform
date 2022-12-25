@@ -11,13 +11,13 @@
     <nav>
         <div class="container flex flex-wrap items-center justify-between mx-auto">
           <a href="/" class="py-2 px-4 flex items-center">
-            <span class="self-center text-xl font-semibold whitespace-nowrap text-cyan-400">E-Vote</span>
+            <span class="self-center text-xl font-semibold whitespace-nowrap text-cyan-400 hover:text-indigo-900">E-Vote</span>
           </a>
         </div>
     </nav>
     <div class=" flex  text-cyan-400 antialiased flex-col  overflow-hidden bg-gray-50 py-6 sm:py-12">
         <div class=" py-3 sm:w-96 mx-auto text-center">
-            <span class="text-2xl font-light font-serif">Login</span>
+            <span class="text-2xl font-light font-serif hover:text-indigo-900 text-decoration-line: underline">Login</span>
             <div>
                 <% if (messages && messages.error && messages.error.length > 0) { %>
                     <% for(var i=0; i<messages.error.length; i++) { %>
@@ -25,19 +25,19 @@
                     <% } %>
                 <% } %>
             </div>
-            <div class="mt-4 bg-white shadow-md rounded-lg text-left">
+            <div class="mt-10 bg-white shadow-md rounded-lg text-left">
                 <div class="h-2 bg-cyan-400 rounded-t-md"></div>
-                <form action="/session" method="post" class="px-8 py-6">
+                <form action="/session" method="post" class="px-10 py-10">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <label for="email" class="block mt-3 font-semibold font-serif">Email</label>
-                    <input id="email" name="email" type="email" placeholder="Email" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
+                    <input id="email" name="email" type="email" placeholder="Email" class="border w-full h-5 px-3 py-7 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
                     <label for="password" class="block mt-3 font-semibold">Password</label>
-                    <input id="password" name="password" type="password" placeholder="Password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
-                    <button type="submit" class="mt-6 w-full bg-cyan-400 text-white py-2 px-6 rounded-md hover:bg-cyan-400 font-serif">Login</button>
+                    <input id="password" name="password" type="password" placeholder="Password" class="border w-full h-5 px-3 py-7 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
+                    <button type="submit" class="mt-6 w-full bg-cyan-400 text-white py-3.5 px-6 rounded-md hover:bg-cyan-400 font-serif hover:text-indigo-900">Login</button>
                 </form>
             </div>
             <div class="mt-4">
-                <a href="/signup" class="text-sm hover:text-cyan-400 font-serif">If you don't have an account, sign up</a>
+                <a href="/signup" class="text-lg hover:text-cyan-400 font-serif hover:text-indigo-900">If you don't have an account, sign up</a>
             </div>
         </div>
     </div>
