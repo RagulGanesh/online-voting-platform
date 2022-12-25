@@ -10,7 +10,7 @@
 <body class="bg-gray-50">
     <%- include('header.ejs') %>
     <div class="my-6 mx-10">
-        <h3 class="text-4xl my-4 font-medium">Hello, <%= userName %></h3>
+        <h3 class="text-4xl my-4 font-medium">Hey, <%= userName %></h3>
         <div>
             <% if (messages.success) { %>
                 <p class="bg-purple-100 m-3 list-none rounded-md px-4 py-2"><%= messages.success %></p>
@@ -24,7 +24,7 @@
         </div>
         <div class="flex-auto">
             <div class="mx-4">  
-                <p class="text-purple-600"><%= (elections.length==0)?"You haven't created any elections yet!":"" %></p>
+                <p class="text-purple-600"><%= (elections.length==0)?"You have not created any elections yet!":"" %></p>
                 <ol class="list-decimal">
                     <% for (let i=0; i<elections.length; i++) { %>
                         <li>

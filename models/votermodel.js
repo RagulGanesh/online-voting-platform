@@ -9,20 +9,20 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    resetPass(password) {
+    resetPassword(password) {
       return this.update({ password });
     }
 
-    static async createVoter({ voterID, password, electionID }) {
+    static async createVoter({ voterid, password, electionID }) {
       return await this.create({
-        voterID,
+        voterid,
         password,
         electionID,
         votedOrNot: false,
       });
     }
 
-    static async getNumberOfVoters(electionID) {
+    static async getNumberOfVoterss(electionID) {
       return await this.count({
         where: {
           electionID,
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static async getVoters(electionID) {
+    static async gettVoters(electionID) {
       return await this.findAll({
         where: {
           electionID,
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static async deleteVoter(id) {
+    static async deleteAVoter(id) {
       return await this.destroy({
         where: {
           id,
@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   voterModel.init({
-    voterID: {
+    voterid: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,

@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    resetPass(password) {
+    resetPassword(password) {
       return this.update({ password });
     }
 
-    static createAdmin({ firstName, lastName, email, password }) {
+    static createAnAdmin({ firstName, lastName, email, password }) {
       return this.create({
         firstName,
         lastName,

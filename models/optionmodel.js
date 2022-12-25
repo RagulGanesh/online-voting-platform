@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static getOptions(questionID) {
+    static getOptionss(questionID) {
       return this.findAll({
         where: {
           questionID,
@@ -26,14 +26,14 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static addOption({ option, questionID }) {
+    static addAnOption({ option, questionID }) {
       return this.create({
         option,
         questionID,
       });
     }
 
-    static updateOption({ option, id }) {
+    static updateAnOption({ option, id }) {
       return this.update(
         {
           option,
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       );
     }
 
-    static deleteOption(id) {
+    static deleteAnOption(id) {
       return this.destroy({
         where: {
           id,

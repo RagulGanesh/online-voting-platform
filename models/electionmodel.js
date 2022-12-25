@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static addElection({ electionName, adminID, url }) {
+    static addAnElection({ electionName, adminID, url }) {
       return this.create({
         electionName,
         url,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static launchElection(id) {
+    static launchAnElection(id) {
       return this.update(
         {
           launch: true,
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       );
     }
 
-    static getElections(adminID) {
+    static getelections(adminID) {
       return this.findAll({
         where: {
           adminID,
@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    static getElectionURL(url) {
+    static getElectionurl(url) {
       return this.findOne({
         where: {
           url,
