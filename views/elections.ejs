@@ -10,6 +10,11 @@
         body{
           background-size:cover;
         }
+        .e{
+            display: flex;
+            flex-direction: column;
+        }
+
       </style>
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
@@ -27,10 +32,11 @@
                 <a href="/elections/create" class="text-white font-serif hover:text-indigo-900 px-5">+ Create an election</a>
             </div>
         </div>
-        <div class="flex-auto">
+        <div class="e">
+        <!-- <div class="e flex-auto"> -->
             <div class="mx-4">  
                 <p class="text-white font-serif text-rose-400"><%= (elections.length==0)?"Hey,You haven't created any elections yet!!!":"" %></p>
-                <ol style="list-style-type:lower-alpha">
+                <ol style="list-style-type:lower-alpha" class="text-white">
                     <% for (let i=0; i<elections.length; i++) { %>
                         <li>
                             <div class="flex items-center w-fit my-2 px-2 py-3">

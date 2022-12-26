@@ -15,17 +15,34 @@
             body{
               background-size:cover;
             }
+            .signup{
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                justify-content:center;
+                margin: auto;
+                overflow: hidden;
+            }
+            .navbar{
+                display: flex;
+                flex-wrap: wrap;
+                margin: auto;
+                overflow: hidden;
+            }
+            .form{
+                border:1px solid green;
+            }
           </style>
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
     <nav>
-        <div class="container flex flex-wrap items-center justify-between mx-auto">
+        <div class="container navbar">
           <a href="/" class="py-2 px-4 flex items-center">
             <span class="self-center text-xl font-semibold whitespace-nowrap text-cyan-400">e-Voting</span>
           </a>
         </div>
     </nav>
-    <div class=" flex  text-gray-800 antialiased flex-col overflow-hidden bg-gray-50 ">
+    <div class="signup text-gray-800 antialiased bg-gray-50 ">
         <div class=" sm:w-96 mx-auto text-center">
             <span class="text-2xl font-light font-serif text-decoration-line: underline hover:text-indigo-900 text-red-400">Create a new admin account</span>
             <div>
@@ -35,7 +52,7 @@
                     <% } %>
                 <% } %>
             </div>
-            <div class="mt-4 bg-white shadow-md rounded-lg text-left">
+            <div class="form mt-4 bg-white shadow-md rounded-lg text-left">
                 <div class="h-2 bg-green-400 rounded-t-md"></div>
                 <form action="/admin" method="post" class="px-8 py-6">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
