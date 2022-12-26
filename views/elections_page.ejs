@@ -8,8 +8,11 @@
     <title><%= title %></title>
     <link rel="icon" type="image/x-icon" href="/img/vote.png">
     <style>
-        body{
-          background-size:cover;
+        body,.c{
+          text-align: center;
+        }
+        .c{
+            justify-content: center;
         }
         .one{
         display: flex;
@@ -22,6 +25,16 @@
       .three{
         display: flex;
         flex-direction: row;
+      }
+      .c1{
+        margin-right: 0px;
+        text-align: center;
+      }
+      .c2{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
       }
       </style>
 </head>
@@ -44,34 +57,36 @@
         <% if (launch) { %>
             <div class="py-8">
                 <h4 class="text-3xl my-5 font-medium">Your election has been launched!!!</h4>
-                <h2 class="my-3 text-lg text-black flex gap-1">Voters can vote from the url:</h2>
+                <h2 class="my-3 text-lg text-black" align="center">Voters can vote from the url:</h2>
                 <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900 text-2xl">Click Here!!!</a>
                 <!-- <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900">https://localhost:3000/e/<%= url %></a> -->
             </div>
         <% } %>
         <div class="mt-4">
-            <h2 class="my-2 text-2xl text-black flex gap-3 font-serif py-4">Number of questions in the ballot are : <span class="text-cyan-600 font-serif text-2xl"> <%= nq %> </span></h2>
+            <h2 class="my-2 text-2xl text-black flex font-serif py-4 c">Number of questions in the ballot are : <span class="text-cyan-600 font-serif text-2xl"> <%= nq %> </span></h2>
             <% if (!launch) { %>
                 <a href="/elections/<%= id %>/questions" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif text-2xl">You can manage your questions for the elections from here!!!</a>
             <% } %>
         </div>
         <div class="mb-8 bt-4">
-            <h2 class="my-3 text-2xl text-black flex gap-3 font-serif py-4">Number of registered voters for the election : <span class="text-cyan-600 font-serif text-2xl"> <%= nv %> </span></h2>
+            <h2 class="my-3 text-2xl text-black flex gap-3 font-serif py-4 c">Number of registered voters for the election : <span class="text-cyan-600 font-serif text-2xl"> <%= nv %> </span></h2>
             <a href="/elections/<%= id %>/voters" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 text-2xl">You can manage your voters for the election from here!!!</a>
         </div>
         <% if (!launch) { %>
-            <div class="bg-cyan-800 rounded w-fit px-4 py-4 hover:bg-cyan-600 font-serif">
-                <a href="/elections/<%= id %>/preview" class="text-white font-serif hover:text-indigo-900">Preview and Launch election from here</a>
+            <div class="bg-cyan-800 rounded px-4 py-4 hover:bg-cyan-600 font-serif">
+                <a href="/elections/<%= id %>/preview" class="text-white font-serif hover:text-indigo-900 c1">Preview and Launch election from here</a>
             </div>
         <% } %>
         <% if (launch) { %>
-            <div class="flex gap-5">
+            
+            <div class="flex c2">
                 <div class="bg-cyan-800 rounded w-fit px-4 py-3 hover:bg-cyan-600 ease-linear transition-all duration-150">
-                    <a href="" class="text-white font-serif hover:text-indigo-900">Preview results from here</a>
+                    
+                    <a href="" class="text-white font-serif hover:text-indigo-900 c1">Preview results from here</a>
                 </div>
                 <br>
                 <div class="bg-cyan-800 rounded w-fit px-4 py-3 hover:bg-cyan-600 ease-linear transition-all duration-150">
-                    <a href="" class="text-white font-serif hover:text-indigo-900">End Election</a>
+                    <a href="" class="text-white font-serif hover:text-indigo-900 c1">End Election</a>
                 </div>
             </div>
         <% } %>
