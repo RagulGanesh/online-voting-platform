@@ -3,12 +3,21 @@ const express = require("express");
 const app = express();
 const csrf = require("tiny-csrf");
 const cookieParser = require("cookie-parser");
+
+
+//requiring the models necessary for the app
 const { adminModel, electionModel, questionsModel, optionModel, voterModel } = require("./models");
+
+//require body-parser for post routes
 const bodyParser = require("body-parser");
 const path = require("path");
 const bcrypt = require("bcrypt");
+
+//requiring passport js for authentication
 const passport = require("passport");
 const connectEnsureLogin = require("connect-ensure-login");
+
+//requiring session and flash for showing errors
 const session = require("express-session");
 const flash = require("connect-flash");
 const LocalStratergy = require("passport-local");
@@ -101,19 +110,19 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   if (id.role === "admin") {
     adminModel.findByPk(id.id)
-      .then((user) => {
-        done(null, user);
+      .then((user1) => {
+        done(null, user1);
       })
-      .catch((error) => {
-        done(error, null);
+      .catch((error1) => {
+        done(error1, null);
       });
   } else if (id.role === "voter") {
     voterModel.findByPk(id.id)
-      .then((user) => {
-        done(null, user);
+      .then((user1) => {
+        done(null, user1);
       })
-      .catch((error) => {
-        done(error, null);
+      .catch((error1) => {
+        done(error1, null);
       });
   }
 });
@@ -147,6 +156,7 @@ app.get("/", (req, res) => {
 
 //elections home page
 //this is the home page for elections
+//the page that opens where the admin can add elections
 app.get(
   "/elections",
   connectEnsureLogin.ensureLoggedIn(),
@@ -178,6 +188,7 @@ app.get(
 
 //signup page
 //this is where the user can sign-up
+//this is opened when we dont have an account and to create an account
 app.get("/signup", (request2, response2) => {
   response2.render("signup", {
     title: "create an admin account",
@@ -821,6 +832,7 @@ app.get(
 );
 
 //add voter page
+//this is the page where we can add voters
 app.get(
   "/elections/:electionID/voters/create",
   connectEnsureLogin.ensureLoggedIn(),
@@ -838,6 +850,7 @@ app.get(
 );
 
 //add voter
+//this is where the admin can register the voters using voterid and password
 app.post(
   "/elections/:electionID/voters/create",
   connectEnsureLogin.ensureLoggedIn(),
@@ -855,17 +868,17 @@ app.post(
           `/elections/${requestr.params.electionID}/voters/create`
         );
       }
-      if (requestr.body.password.length < 8) {
+      if (requestr.body.password.length < 6) {
         requestr.flash("error", "length of password should be of atleast 8 characters!!!");
         return responser.redirect(
           `/elections/${requestr.params.electionID}/voters/create`
         );
       }
-      const hashedPwd = await bcrypt.hash(requestr.body.password, saltRounds);
+      const hashedPwd1 = await bcrypt.hash(requestr.body.password, saltRounds);
       try {
         await voterModel.createVoter({
           voterid: requestr.body.voterid,
-          password: hashedPwd,
+          password: hashedPwd1,
           electionID: requestr.params.electionID,
         });
         return responser.redirect(
@@ -884,6 +897,7 @@ app.post(
 );
 
 //delete voter
+//to delete unnecessary voter
 app.delete(
   "/elections/:electionID/voters/:voterID",
   connectEnsureLogin.ensureLoggedIn(),
@@ -921,6 +935,7 @@ app.get(
 );
 
 //reset user password
+//to reset the user password if he has forgotten by which the admin can change it 
 app.post(
   "/elections/:electionID/voters/:voterID/edit",
   connectEnsureLogin.ensureLoggedIn(),
@@ -959,6 +974,7 @@ app.post(
 );
 
 //election preview
+//this is the page like how the voting page looks like when the user opens it
 app.get(
   "/elections/:electionID/preview",
   connectEnsureLogin.ensureLoggedIn(),
