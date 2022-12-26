@@ -56,6 +56,15 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
+    //new
+    // static deleteElection(id){
+    //   return this.destroy({
+    //     where:{
+    //       id,
+    //     },
+    //   });
+    // }
+
     static associate(models) {
       // define association here
       electionModel.belongsTo(models.adminModel, {

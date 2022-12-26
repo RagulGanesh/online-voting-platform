@@ -1087,6 +1087,50 @@ app.get("/e/:url/", async (requestaa, responseaa) => {
   }
 });
 
+
+//recent
+//Deleting the election
+// app.delete(
+//   "/elections/:id",
+//   connectEnsureLogin.ensureLoggedIn(),
+//   async (request, response) => {
+
+//     //const election = await electionModel.findByPk(request.params.id);
+
+
+//     const questions = await questionsModel.findAll({
+//       where: { EID: request.params.id },
+//     });
+
+//     // deleting the  questions annd  options  in election
+//     questions.forEach(async (Question) => {
+//       const options = await optionModel.findAll({
+//         where: { QID: Question.id },
+//       });
+//       options.forEach(async (option) => {
+//         await optionModel.destroy({ where: { id: option.id } });
+//       });
+//       await questionsModel.destroy({ where: { id: Question.id } });
+//     });
+
+//     //deleting all voters from  the  election
+//     const voters = await voterModel.findAll({
+//       where: { EID: request.params.id },
+//     });
+//     voters.forEach(async (voter) => {
+//       await voters.destroy({ where: { id: voter.id } });
+//     });
+
+//     try {
+//       await electionModel.destroy({ where: { id: request.params.id } });
+//       return response.json({ ok: true });
+//     } catch (error) {
+//       console.log(error);
+//       response.send(error);
+//     }
+//   }
+// );
+
 app.use(function (requestt, responset) {
   responset.status(404).render("404_not_found.ejs");
 });
