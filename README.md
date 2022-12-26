@@ -1,13 +1,16 @@
 **Hello Guys ,This is G Ragul**
 
 # Online Voting System
-This is an Online Voting Platform built using Node.js ,Postgresql,Tailwincss,Express.js which allows election administrators to sign up and create multiple elections. You can create ballots of multiple questions,add voters for particular election,reset password feature is available for both election admin and voter,create a custom public URL for the election... etc..
-
+This is an Online Voting platform where we can hold any number of elections with "n" number of questions as required
+This is built using HTML5,CSS3,TailWindCSS,EJS for front end and Node.js, Express.js for backend with PostgreSQL as database.
+Here we can log in as an election adminnistrator and create multiple elections.
+Each election can have multiple questions, with election admin power to control the voters for a particular election.
+After the election has been created there is a live link that can be created where the voters can login and vote in it.
 
 
 [![MIT License](https://img.shields.io/badge/Platform-Deployed-green.svg)](https://choosealicense.com/licenses/mit/)
 
-Deployed App link: 
+## Deployed App link: 
 https://ragulg-online-voting-platform.onrender.com/
 
 ## Demo link
@@ -16,17 +19,14 @@ https://ragulg-online-voting-platform.onrender.com/
 
 ## Features
 
-
-- Fully Responsive platform
-- reset password feature for both admin and voter
-- Uses CSRF tokens to prevent attacks 
 - Admin will be able to signup
-- Admin can create the elections
+- Admin can create multiple elections
 - Admin can create a ballot of questions in an election
-- Admin can registervoters
-- Admin can launch election
+- Admin can register voters
+- Admin can launch an election
+- Reset password feature for both admin and voter
 - Elections administrator can set custom path to election
-
+- Uses CSRF tokens to prevent attacks 
 
 ## Tech Stack
 
@@ -40,8 +40,6 @@ https://ragulg-online-voting-platform.onrender.com/
 ## Installation
 
 Don't forget to create the databse with corresponding name as mentioned in `config.json`
-
-
 
 Go to the project directory
 
@@ -72,4 +70,9 @@ To migrate database,run the following command
 
 ```bash
 npx sequelize-cli db:migrate
+```
+## Note : 
+To see if npm is installed or not 
+``` bash
+type npm -v in Terminal(for windows)
 ```
