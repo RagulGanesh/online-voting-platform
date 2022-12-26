@@ -9,6 +9,7 @@
     <link rel="icon" type="image/x-icon" href="/img/vote.png">
     <title>Edit question</title>
     <script>
+        //update a question function
         var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         function updateAQuestion() {
             let electionID = <%= electionID %>;
@@ -51,6 +52,7 @@
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
     <%- include('header.ejs') %>
+    <!-- breadcrumbs -->
     <div class="flex gap-1 mx-10 mt-6 bg-gray-50">
         <span>--></span>
         <a href="/elections" class="text-cyan-800 hover:text-cyan-600 font-serif">All Elections</a>
@@ -72,6 +74,7 @@
             <div class="mt-4 bg-white shadow-md rounded-lg text-left">
                 <div class="h-2 bg-green-500 rounded-t-md"></div>
                 <div class="px-8 py-6">
+                    <!-- question and description -->
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <label for="questionName" class="block mt-3 font-semibold font-serif text-red-500">Question</label>
                     <input value="<%= questionName %>" id="questionName" name="questionName" type="text" placeholder="Question" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>

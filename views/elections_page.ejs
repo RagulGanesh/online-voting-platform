@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title><%= title %></title>
     <link rel="icon" type="image/x-icon" href="/img/vote.png">
+    <!-- adding styles -->
     <style>
         body,.c{
           text-align: center;
@@ -47,6 +48,7 @@
         <% } %>
     <% } %>
     </div>
+    <!-- breadcrumbs -->
     <div class="flex gap-2 mx-12 mt-7 bg-gray-50">
         <span>--></span>
         <a href="/elections" class="text-cyan-800 hover:text-cyan-600 font-serif hover:text-indigo-900">Here are all the elections!!!</a>
@@ -54,6 +56,7 @@
     </div>
     <div class="my-5 mx-10">
         <h3 class="text-3xl my-3 font-medium"><%= title %></h3>
+        <!-- if launch show this -->
         <% if (launch) { %>
             <div class="py-8">
                 <h4 class="text-3xl my-5 font-medium">Your election has been launched!!!</h4>
@@ -62,21 +65,25 @@
                 <!-- <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900">https://localhost:3000/e/<%= url %></a> -->
             </div>
         <% } %>
+        <!-- shows nuber of questions in the ballot -->
         <div class="mt-4">
             <h2 class="my-2 text-2xl text-black flex font-serif py-4 c">Number of questions in the ballot are : <span class="text-cyan-600 font-serif text-2xl"> <%= nq %> </span></h2>
             <% if (!launch) { %>
                 <a href="/elections/<%= id %>/questions" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif text-2xl">You can manage your questions for the elections from here!!!</a>
             <% } %>
         </div>
+        <!-- shows number of registered voters -->
         <div class="mb-8 bt-4">
             <h2 class="my-3 text-2xl text-black flex gap-3 font-serif py-4 c">Number of registered voters for the election : <span class="text-cyan-600 font-serif text-2xl"> <%= nv %> </span></h2>
             <a href="/elections/<%= id %>/voters" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 text-2xl">You can manage your voters for the election from here!!!</a>
         </div>
+        <!-- preview and lauch the election -->
         <% if (!launch) { %>
             <div class="bg-cyan-800 rounded px-4 py-4 hover:bg-cyan-600 font-serif">
                 <a href="/elections/<%= id %>/preview" class="text-white font-serif hover:text-indigo-900 c1">Preview and Launch election from here</a>
             </div>
         <% } %>
+        <!-- if electionis launched preview results and end the elections -->
         <% if (launch) { %>
             
             <div class="flex c2">
