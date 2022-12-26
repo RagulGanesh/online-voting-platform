@@ -6,8 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title><%= title %></title>
+    <style>
+        body{
+          background-size:cover;
+        }
+      </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-60" background="img/image.jpg">
     <%- include('header.ejs') %>
     <div class="rounded-lg px-6 py-2">
     <% if (messages && messages.error && messages.error.length > 0) { %>
@@ -16,41 +21,43 @@
         <% } %>
     <% } %>
     </div>
-    <div class="flex gap-1 mx-10 mt-6 bg-gray-50">
-        <span>></span>
+    <div class="flex gap-2 mx-12 mt-7 bg-gray-50">
+        <span>--></span>
         <a href="/elections" class="text-cyan-800 hover:text-cyan-600 font-serif hover:text-indigo-900">Here are all the elections!!!</a>
-        <span>></span>
+        <span>--></span>
     </div>
-    <div class="my-6 mx-10">
-        <h3 class="text-4xl my-4 font-medium"><%= title %></h3>
+    <div class="my-5 mx-10">
+        <h3 class="text-3xl my-3 font-medium"><%= title %></h3>
         <% if (launch) { %>
             <div class="py-8">
-                <h4 class="text-2xl my-5 font-medium">Your election has been launched!!!</h4>
-                <h2 class="my-2 text-lg text-black flex gap-1">Voters can vote from the url:</h2>
-                <a href="/e/<%= url %>/" class="py-1 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900">https://localhost:3000/e/<%= url %></a>
+                <h4 class="text-3xl my-5 font-medium">Your election has been launched!!!</h4>
+                <h2 class="my-3 text-lg text-black flex gap-1">Voters can vote from the url:</h2>
+                <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900 text-2xl">Click Here!!!</a>
+                <!-- <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900">https://localhost:3000/e/<%= url %></a> -->
             </div>
         <% } %>
         <div class="mt-4">
-            <h2 class="my-2 text-lg text-black flex gap-1 font-serif">Your election has <span class="text-cyan-600 font-serif"> <%= nq %> </span> questions in the ballot</h2>
+            <h2 class="my-2 text-2xl text-black flex gap-3 font-serif py-4">Number of questions in the ballot are : <span class="text-cyan-600 font-serif text-2xl"> <%= nq %> </span></h2>
             <% if (!launch) { %>
-                <a href="/elections/<%= id %>/questions" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif">Manage your questions here</a>
+                <a href="/elections/<%= id %>/questions" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif text-2xl">You can manage your questions for the elections from here!!!</a>
             <% } %>
         </div>
         <div class="mb-8 bt-4">
-            <h2 class="my-3 text-lg text-black flex gap-1 font-serif">Your election has <span class="text-cyan-600 font-serif"> <%= nv %> </span> registered voters.</h2>
-            <a href="/elections/<%= id %>/voters" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900">Manage your voters here</a>
+            <h2 class="my-3 text-2xl text-black flex gap-3 font-serif py-4">Number of registered voters for the election : <span class="text-cyan-600 font-serif text-2xl"> <%= nv %> </span></h2>
+            <a href="/elections/<%= id %>/voters" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 text-2xl">You can manage your voters for the election from here!!!</a>
         </div>
         <% if (!launch) { %>
-            <div class="bg-cyan-800 rounded w-fit px-4 py-1 hover:bg-cyan-600 font-serif">
-                <a href="/elections/<%= id %>/preview" class="text-white font-serif hover:text-indigo-900">Preview & Launch election from here</a>
+            <div class="bg-cyan-800 rounded w-fit px-4 py-4 hover:bg-cyan-600 font-serif">
+                <a href="/elections/<%= id %>/preview" class="text-white font-serif hover:text-indigo-900">Preview and Launch election from here</a>
             </div>
         <% } %>
         <% if (launch) { %>
             <div class="flex gap-5">
-                <div class="bg-cyan-800 rounded w-fit px-4 py-1 hover:bg-cyan-600 ease-linear transition-all duration-150">
-                    <a href="" class="text-white font-serif hover:text-indigo-900">Preview results here</a>
+                <div class="bg-cyan-800 rounded w-fit px-4 py-3 hover:bg-cyan-600 ease-linear transition-all duration-150">
+                    <a href="" class="text-white font-serif hover:text-indigo-900">Preview results from here</a>
                 </div>
-                <div class="bg-cyan-800 rounded w-fit px-4 py-1 hover:bg-cyan-600 ease-linear transition-all duration-150">
+                <br>
+                <div class="bg-cyan-800 rounded w-fit px-4 py-3 hover:bg-cyan-600 ease-linear transition-all duration-150">
                     <a href="" class="text-white font-serif hover:text-indigo-900">End Election</a>
                 </div>
             </div>

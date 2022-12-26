@@ -291,7 +291,7 @@ app.get(
   connectEnsureLogin.ensureLoggedIn(),
   (request7, response7) => {
     if (request7.user.role === "admin") {
-      response7.render("reset_password", {
+      response7.render("reset_password_page", {
         title: "Reset your password",
         csrfToken: request7.csrfToken(),
       });

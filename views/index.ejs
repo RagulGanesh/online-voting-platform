@@ -5,10 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/style.css" />
+    <style>
+      body{
+        background-size:cover;
+      }
+    </style>
+    <!-- <link rel="stylesheet" href="./styles" /> -->
     <title><%= title %></title>
   </head>
-  <body class="bg-gray-50">
+  <body class="bg-gray-50" background="img/image.jpg">
     <nav>
       <div
         class="container flex flex-wrap items-center justify-between mx-auto"
@@ -16,7 +21,7 @@
         <a href="/" class="py-2 px-4 flex items-center">
           <span
             class="self-center text-xl font-semibold whitespace-nowrap text-cyan-400 hover:text-indigo-900"
-            >E-Vote</span
+            >e-Voting</span
           >
         </a>
       </div>
@@ -30,11 +35,11 @@
   </div>
     <div class="grid grid-cols-7">
       <div class="col-start-3 col-span-3">
-        <p class="py-3 mb-9 text-4xl font-serif">Welcome to the Online Voting Platform</p>
-        <p class="py-1 text-xl py-3 mb-9">
+        <p class="py-5 mb-10 text-4xl font-serif text-cyan-400">Welcome to the Online Voting Platform</p>
+        <p class="py-1 text-xl py-3 mb-9 text-white">
           Are you new here? <a class="py-3 mb-9 text-cyan-400 font-serif hover:text-indigo-900" href="/signup">Sign-up from here</a>
         </p>
-        <p class="py-1 text-xl font-serif py-3 mb-9">
+        <p class="py-1 text-xl font-serif py-3 mb-9 text-white">
           Do you already have an account?
           <a class="text-cyan-400 font-serif hover:text-indigo-900 py-3 mb-9" href="/login">Sign-in from here</a>
         </p>

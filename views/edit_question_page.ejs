@@ -22,15 +22,20 @@
                     "questionName":question,
                     "description":description
                 })
-            }).then((res)=>{
-                if (res.ok) {
+            }).then((res1)=>{
+                if (res1.ok) {
                     window.location.replace(`/elections/${electionID}/questions`);
                 }
-            }).catch((err)=> console.error(err))
+            }).catch((err31)=> console.error(err31))
         }
     </script>
+        <style>
+            body{
+              background-size:cover;
+            }
+          </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50" background="img/image.jpg">
     <%- include('header.ejs') %>
     <div class="flex gap-1 mx-10 mt-6 bg-gray-50">
         <span>></span>
@@ -40,7 +45,7 @@
         <span>></span>
         <a href="/elections/<%= electionID %>/questions" class="text-cyan-800 hover:text-cyan-600 font-serif">Questions</a>
     </div>
-    <div class=" flex  text-gray-800 antialiased flex-col  overflow-hidden bg-gray-50 py-6 sm:py-12">
+    <div class=" flex  text-gray-800 antialiased flex-col  overflow-hidden bg-gray-52 py-7 sm:py-14">
         <div class=" py-3 sm:w-96 mx-auto text-center">
             <span class="text-2xl font-light font-serif hover:text-indigo-900">Edit question</span>
             <div>
@@ -51,7 +56,7 @@
                 <% } %>
             </div>
             <div class="mt-4 bg-white shadow-md rounded-lg text-left">
-                <div class="h-2 bg-cyan-400 rounded-t-md"></div>
+                <div class="h-2 bg-red-500 rounded-t-md"></div>
                 <div class="px-8 py-6">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <label for="questionName" class="block mt-3 font-semibold font-serif">Question</label>
@@ -60,6 +65,7 @@
                     <textarea id="description" name="description" class="border w-full px-2 py-1 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" placeholder="Description" rows="4" cols="20"><%= description %></textarea>
                     <button class="mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900" onclick="updateAQuestion()">Update question</button>
                 </div>
+                <div class="h-2 bg-red-500 rounded-t-md"></div>
             </div>
         </div>
     </div>
