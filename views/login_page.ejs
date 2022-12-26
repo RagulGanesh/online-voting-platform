@@ -19,6 +19,9 @@
             margin: auto;
             overflow: hidden;
         }
+        #roundButton{
+            border-radius:100px;
+        }
     </style>
 </head>
 <!-- class="bg-gray-50" -->
@@ -48,7 +51,7 @@
                     <input id="email" name="email" type="email" placeholder="Email" class="border w-full h-5 px-5 py-10 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
                     <label for="password" class="block mt-5 font-semibold text-red-400">Password</label>
                     <input id="password" name="password" type="password" placeholder="Password" class="border w-full h-5 px-3 py-10 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
-                    <button type="submit" class="mt-6 w-full bg-cyan-400 text-white py-3.5 px-8 rounded-md hover:bg-cyan-400 font-serif hover:text-indigo-900">Login</button>
+                    <button type="submit" id="roundButton" class="mt-6 w-full bg-cyan-400 text-white py-3.5 px-8 rounded-md hover:bg-cyan-400 font-serif hover:text-indigo-900">Login</button>
                 </form>
                 <div class="h-2 bg-green-400 rounded-t-md"></div>
             </div>

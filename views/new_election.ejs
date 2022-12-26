@@ -10,6 +10,9 @@
         body{
           background-size:cover;
         }
+        #roundButton{
+            border-radius: 50px;
+        }
       </style>
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
@@ -37,7 +40,7 @@
                     <input id="electionName" name="electionName" type="text" placeholder="Election name" class="border w-full h-5 px-3 py-7 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
                     <label for="url" class="block mt-3 font-semibold font-serif">Enter your custom URL string (With no spaces)</label>
                     <input id="url" name="url" type="text" placeholder="Election URL String" class="border w-full h-5 px-3 py-7 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
-                    <button type="submit" class="mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900">Create</button>
+                    <button type="submit" id="roundButton" class=" mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900">Create</button>
                 </form>
                 <div class="h-2 bg-green-400 rounded-t-md"></div>
             </div>

@@ -32,13 +32,16 @@
             .form{
                 border:1px solid green;
             }
+            #roundButton{
+            border-radius:100px;
+            }
           </style>
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
     <nav>
         <div class="container navbar">
           <a href="/" class="py-2 px-4 flex items-center">
-            <span class="self-center text-xl font-semibold whitespace-nowrap text-cyan-400">e-Voting</span>
+            <span class="self-center text-xl font-semibold whitespace-nowrap text-cyan-400 hover:text-white">e-Voting</span>
           </a>
         </div>
     </nav>
@@ -56,15 +59,15 @@
                 <div class="h-2 bg-green-400 rounded-t-md"></div>
                 <form action="/admin" method="post" class="px-8 py-6">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                    <label for="firstName" class="block mt-3 font-semibold font-serif hover:text-indigo-900">First name</label>
+                    <label for="firstName" class="block mt-3 font-semibold font-serif hover:text-indigo-900 text-red-400">First name</label>
                     <input id="firstName" name="firstName" type="text" placeholder="First name" class="border w-full h-5 px-3 py-8 mt-2 hover:outline-none focus:outline-none focus:ring-amber-400 focus:ring-1 rounded-md" required>
-                    <label for="lastName" class="block mt-3 font-semibold font-serif hover:text-indigo-900">Last name</label>
+                    <label for="lastName" class="block mt-3 font-semibold font-serif hover:text-indigo-900 text-red-400">Last name</label>
                     <input id="lastName" name="lastName" type="text" placeholder="Last name" class="border w-full h-5 px-3 py-8 mt-2 hover:outline-none focus:outline-none focus:ring-amber-400 focus:ring-1 rounded-md">
-                    <label for="email" class="block mt-3 font-semibold font-serif hover:text-indigo-900">Email</label>
+                    <label for="email" class="block mt-3 font-semibold font-serif hover:text-indigo-900 text-red-400">Email</label>
                     <input id="email" name="email" type="email" placeholder="Email" class="border w-full h-5 px-3 py-8 mt-2 hover:outline-none focus:outline-none focus:ring-amber-400 focus:ring-1 rounded-md" required>
-                    <label for="password" class="block mt-3 font-semibold font-serif hover:text-indigo-900">Password</label>
+                    <label for="password" class="block mt-3 font-semibold font-serif hover:text-indigo-900 text-red-400">Password</label>
                     <input id="password" name="password" type="password" placeholder="Password" class="border w-full h-8 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
-                    <button type="submit" class="mt-6 bg-cyan-400 w-full text-white py-5 px-6 rounded-md hover:bg-cyan-400 font-serif hover:text-indigo-900 hover:text-indigo-900">Create account</button>
+                    <button type="submit" id="roundButton" class="mt-6 bg-cyan-400 w-full text-white py-5 px-6 rounded-md hover:bg-cyan-400 font-serif hover:text-indigo-900 hover:text-indigo-900">Create account</button>
                 </form>
                 <div class="h-2 bg-green-400 rounded-t-md"></div>
             </div>

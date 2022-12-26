@@ -28,6 +28,11 @@
         body{
           background-size:cover;
         }
+        .one{
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
       </style>
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
@@ -57,7 +62,7 @@
                 <ol class="list-decimal">
                     <% for(let i=0; i<options.length; i++) { %>
                         <li class="option-item">
-                            <div class="flex justify-between items-center w-full my-2 px-2 py-1 rounded-lg bg-cyan-50">
+                            <div class="one justify-between items-center w-full my-2 px-2 py-1 rounded-lg bg-green-100">
                                 <p class="ml-2 text-lg font-serif"><%= options[i].option %></p>
                                 <div class="flex gap-2 text-cyan-800">
                                 <div class="rounded w-fit px-2 py-1 flex gap-2 cursor-pointer hover:text-cyan-600">

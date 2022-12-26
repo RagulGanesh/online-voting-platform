@@ -28,6 +28,9 @@
             body{
               background-size:cover;
             }
+            #round{
+                border-radius: 50px;
+            }
           </style>
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
@@ -52,9 +55,9 @@
                 <% } %>
             </div>
             <div class="mt-4 bg-white shadow-md rounded-lg text-left">
-                <div class="h-2 bg-cyan-400 rounded-t-md"></div>
+                <div class="h-2 bg-green-400 rounded-t-md"></div>
                 <div class="divide-y divide-solid">
-                    <h2 class="px-4 py-2 text-2xl font-light font-serif">Answer the below questions</h2>
+                    <h2 class="px-4 py-2 text-2xl font-light font-serif text-red-500">Answer the below questions</h2>
                     <div class="pb-2 px-8">
                         <form action="" class="divide-y divide-solid">
                             <ol class="list-decimal mb-5">
@@ -78,13 +81,14 @@
                                 <% } %>
                             </ol>
                             <div class="flex py-4">
-                                <button type="submit" class="text-white bg-cyan-800 rounded w-fit px-4 py-1 hover:bg-cyan-600 ml-2 ease-linear transition-all duration-150 hover:text-indigo-900">
+                                <button type="submit" id="round" class="text-white bg-cyan-800 rounded w-fit px-4 py-1 hover:bg-cyan-600 ml-2 ease-linear transition-all duration-150 hover:text-indigo-900">
                                     Submit vote
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
+                <div class="h-2 bg-green-400 rounded-t-md"></div>
             </div>
         </div>
     </div>
