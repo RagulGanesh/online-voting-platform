@@ -17,11 +17,11 @@
                 body: JSON.stringify({
                     "_csrf":token,
                 })
-            }).then((res)=>{
-                if (res.ok) {
+            }).then((res1)=>{
+                if (res1.ok) {
                     window.location.replace(`/elections/${electionID}`);
                 }
-            }).catch((err)=> console.error(err))
+            }).catch((err11)=> console.error(err11))
         }
     </script>
         <style>
