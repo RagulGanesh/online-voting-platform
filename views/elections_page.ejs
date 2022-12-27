@@ -8,6 +8,22 @@
     <title><%= title %></title>
     <link rel="icon" type="image/x-icon" href="/img/vote.png">
     <!-- adding styles -->
+    <!-- <script>
+function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myInput");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
+  // Alert the copied text
+  alert("Copied the text: " + copyText.value);
+}
+      </script> -->
     <style>
         body,.c{
           text-align: center;
@@ -67,6 +83,9 @@
             <div class="py-8">
                 <h4 class="text-3xl my-5 font-medium">Your election has been launched!!!</h4>
                 <h4 class="text-3xl my-5 font-medium">URL :</h4>
+                <!-- <p id="p11">https://ragulg-online-voting-platform.onrender.com/e/<%= url %>/</p> -->
+                <!-- <input type="text" value="https://localhost:3000/e/<%= url %>/voter" id="myInput"><br> -->
+                <!-- <button onclick="myFunction()">Copy TEXT 1</button> -->
                 <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-white text-2xl">Click Here!!!</a>
                 <!-- <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900">https://localhost:3000/e/<%= url %></a> -->
             </div>

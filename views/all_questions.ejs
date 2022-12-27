@@ -103,7 +103,8 @@
         <div>
             <form action="/elections/<%= id %>/questions/create" method="post" class="px-8 py-6">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                <label for="questionName" class="block mt-3 font-semibold font-serif text-black">Question Title</label>
+                <label class="block mt-3 font-semibold font-serif text-black">Add Questions</label>
+                <label for="questionName" class="block mt-3 font-semibold font-serif text-black">Question Title</label>                
                 <input id="questionName" name="questionName" type="text" placeholder="Question" class="six border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
                 <label for="description" class="block mt-3 font-semibold font-serif text-black">Description</label>
                 <textarea id="description" name="description" class="six border w-full px-2 py-1 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" placeholder="Description" rows="4" cols="20"></textarea>
