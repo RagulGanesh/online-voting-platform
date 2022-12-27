@@ -1,6 +1,7 @@
 //requiring all the necessary packages for the project
 const express = require("express");
 const app = express();
+//supports encrypting cookies on the client side to prevent malicious attackers
 const csrf = require("tiny-csrf");
 const cookieParser = require("cookie-parser");
 
@@ -14,6 +15,7 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 
 //requiring passport js for authentication
+//authentication middleware
 const passport = require("passport");
 const connectEnsureLogin = require("connect-ensure-login");
 
@@ -133,7 +135,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //landing page
 //This is the first page seen when the user enters the root url
-app.get("/", async (req, res) => {
+app.get("/", async function(req, res){
   if (req.user) {
     console.log(req.user);
     if (req.user.role === "admin") {
@@ -160,7 +162,7 @@ app.get("/", async (req, res) => {
 app.get(
   "/elections",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request1, response1) => {
+  async function (request1, response1) {
     if (request1.user.role === "admin") {
       let loggedinuser = request1.user.firstName + " " + request1.user.lastName;
       try {
@@ -189,7 +191,7 @@ app.get(
 //signup page
 //this is where the user can sign-up
 //this is opened when we dont have an account and to create an account
-app.get("/signup", (request2, response2) => {
+app.get("/signup", function(request2, response2) {
   response2.render("signup", {
     title: "create an admin account",
     csrfToken: request2.csrfToken(),
@@ -239,7 +241,7 @@ app.post("/admin", async function(req, res) {
 
 //login page
 //this is where the admin can login
-app.get("/login", async (request3, response3) => {
+app.get("/login", async function (request3, response3){
   if (request3.user) {
     return response3.redirect("/elections");
   }
@@ -251,7 +253,7 @@ app.get("/login", async (request3, response3) => {
 
 //voter login page
 //this is the page where the voter can login
-app.get("/e/:url/voter", function (request4, response4) {
+app.get("/e/:url/voter", async function (request4, response4) {
   response4.render("login_voter", {
     title: "Login in as Voter",
     url: request4.params.url,
@@ -286,7 +288,7 @@ app.post(
 
 //signout
 //this is the route for signing out the user
-app.get("/signout", (request6, response6, next) => {
+app.get("/signout", function (request6, response6, next){
   request6.logout((err1) => {
     if (err1) {
       return next(err1);
@@ -300,7 +302,7 @@ app.get("/signout", (request6, response6, next) => {
 app.get(
   "/password-reset",
   connectEnsureLogin.ensureLoggedIn(),
-  (request7, response7) => {
+  function(request7, response7) {
     if (request7.user.role === "admin") {
       response7.render("reset_password_page", {
         title: "Reset your password",
@@ -317,7 +319,7 @@ app.get(
 app.post(
   "/password-reset",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request8, response8) => {
+  async function (request8, response8) {
     if (request8.user.role === "admin") {
       if (!request8.body.old_password) {
         request8.flash("error", "please do enter your old password!!!");
@@ -367,7 +369,7 @@ app.post(
 app.get(
   "/elections/create",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request9, response9) => {
+  async function(request9, response9) {
     if (request9.user.role === "admin") {
       return response9.render("new_election_page", {
         title: "create an election",
@@ -384,7 +386,7 @@ app.get(
 app.post(
   "/elections",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request11, response11) => {
+  async function (request11, response11) {
     if (request11.user.role === "admin") {
       if (request11.body.electionName.length < 5) {
         request11.flash("error", "Name of an election length should be of atleast 5 characters");
@@ -424,7 +426,7 @@ app.post(
 app.get(
   "/elections/:id",
   connectEnsureLogin.ensureLoggedIn(),
-  async (req, res) => {
+  async function (req, res) {
     if (req.user.role === "admin") {
       try {
         const election1 = await electionModel.getElection(req.params.id);
@@ -455,7 +457,7 @@ app.get(
 app.get(
   "/elections/:id/questions",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request1, response) => {
+  async function (request1, response) {
     if (request1.user.role === "admin") {
       try {
         const election2 = await electionModel.getElection(request1.params.id);
@@ -492,7 +494,7 @@ app.get(
 app.get(
   "/elections/:id/questions/create",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request2, response1) => {
+  async function (request2, response1){
     if (request2.user.role === "admin") {
       try {
         const election3 = await electionModel.getElection(request2.params.id);
@@ -520,7 +522,7 @@ app.get(
 app.post(
   "/elections/:id/questions/create",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request3, response3) => {
+  async function (request3, response3){
     if (request3.user.role === "admin") {
       if (request3.body.questionName.length < 5) {
         request3.flash("error", "Length of question should be of atleast 5 characters");
@@ -558,7 +560,7 @@ app.post(
 app.get(
   "/elections/:electionID/questions/:questionID/edit",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request5, response5) => {
+  async function (request5, response5){
     if (request5.user.role === "admin") {
       try {
         const elections = await electionModel.getElection(request5.params.electionID);
@@ -589,7 +591,7 @@ app.get(
 app.put(
   "/questions/:questionID/edit",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request6, response6) => {
+  async function(request6, response6)  {
     if (request6.user.role === "admin") {
       if (request6.body.questionName.length < 5) {
         request6.flash("error", "Length of question should be of atleast 5 characters");
@@ -619,7 +621,7 @@ app.put(
 app.delete(
   "/elections/:electionID/questions/:questionID",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request7, response7) => {
+  async function(request7, response7) {
     if (request7.user.role === "admin") {
       try {
         const nq = await questionsModel.getNumberOfQuestionss(
@@ -646,7 +648,7 @@ app.delete(
 app.get(
   "/elections/:id/questions/:questionID",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request8, response8) => {
+  async function(request8, response8)  {
     if (request8.user.role === "admin") {
       try {
         const questions = await questionsModel.getQuestion(request8.params.questionID);
@@ -685,7 +687,7 @@ app.get(
 app.post(
   "/elections/:id/questions/:questionID",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request9, response9) => {
+  async function(request9, response9) {
     if (request9.user.role === "admin") {
       if (!request9.body.option) {
         request9.flash("error", "please do enter an option!!!");
@@ -721,7 +723,7 @@ app.post(
 app.delete(
   "/options/:optionID",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request12, response12) => {
+  async function(request12, response12) {
     if (request12.user.role === "admin") {
       try {
         const res = await optionModel.deleteAnOption(request12.params.optionID);
@@ -740,7 +742,7 @@ app.delete(
 app.get(
   "/elections/:electionID/questions/:questionID/options/:optionID/edit",
   connectEnsureLogin.ensureLoggedIn(),
-  async (requesta, responsea) => {
+  async function(requesta, responsea) {
     if (requesta.user.role === "admin") {
       try {
         const electiona = await electionModel.getElection(requesta.params.electionID);
@@ -774,7 +776,7 @@ app.get(
 app.put(
   "/options/:optionID/edit",
   connectEnsureLogin.ensureLoggedIn(),
-  async (requestb, responseb) => {
+  async function (requestb, responseb) {
     if (requestb.user.role === "admin") {
       if (!requestb.body.option) {
         requestb.flash("error", "Please do enter an option");
@@ -804,7 +806,7 @@ app.put(
 app.get(
   "/elections/:electionID/voters",
   connectEnsureLogin.ensureLoggedIn(),
-  async (request9, response9) => {
+  async function(request9, response9) {
     if (request9.user.role === "admin") {
       try {
         const voters = await voterModel.gettVoters(request9.params.electionID);
@@ -837,7 +839,7 @@ app.get(
 app.get(
   "/elections/:electionID/voters/create",
   connectEnsureLogin.ensureLoggedIn(),
-  (requeste, responsee) => {
+  async function(requeste, responsee) {
     if (requeste.user.role === "admin") {
       responsee.render("new_voters_page", {
         title: "Add a voter to election",
@@ -855,7 +857,7 @@ app.get(
 app.post(
   "/elections/:electionID/voters/create",
   connectEnsureLogin.ensureLoggedIn(),
-  async (requestr, responser) => {
+  async function(requestr, responser) {
     if (requestr.user.role === "admin") {
       if (!requestr.body.voterid) {
         requestr.flash("error", "please do enter voterID!!!");
@@ -901,8 +903,7 @@ app.post(
 //to delete unnecessary voter
 app.delete(
   "/elections/:electionID/voters/:voterID",
-  connectEnsureLogin.ensureLoggedIn(),
-  async (requestz, responsez) => {
+  connectEnsureLogin.ensureLoggedIn(),async function(requestz, responsez) {
     if (requestz.user.role === "admin") {
       try {
         const res2 = await voterModel.deleteAVoter(requestz.params.voterID);
@@ -920,8 +921,7 @@ app.delete(
 //voter password reset page
 app.get(
   "/elections/:electionID/voters/:voterID/edit",
-  connectEnsureLogin.ensureLoggedIn(),
-  (requestx,responsex) => {
+  connectEnsureLogin.ensureLoggedIn(),function (requestx,responsex) {
     if (requestx.user.role === "admin") {
       responsex.render("voter_password_page", {
         title: "Reset voter password",
@@ -939,8 +939,7 @@ app.get(
 //to reset the user password if he has forgotten by which the admin can change it 
 app.post(
   "/elections/:electionID/voters/:voterID/edit",
-  connectEnsureLogin.ensureLoggedIn(),
-  async (requestdd, response) => {
+  connectEnsureLogin.ensureLoggedIn(),async function(requestdd, response){
     if (requestdd.user.role === "admin") {
       if (!requestdd.body.new_password) {
         requestdd.flash("error", "Please do enter a new password!!!");
@@ -976,10 +975,8 @@ app.post(
 
 //election preview
 //this is the page like how the voting page looks like when the user opens it
-app.get(
-  "/elections/:electionID/preview",
-  connectEnsureLogin.ensureLoggedIn(),
-  async (requestl, responsel) => {
+app.get("/elections/:electionID/preview",
+  connectEnsureLogin.ensureLoggedIn(),async function (requestl, responsel) {
     if (requestl.user.role === "admin") {
       try {
         const election = await electionModel.getElection(requestl.params.electionID);
@@ -1035,8 +1032,7 @@ app.get(
 //launch an election
 app.put(
   "/elections/:electionID/launch",
-  connectEnsureLogin.ensureLoggedIn(),
-  async (requestk, responsek) => {
+  connectEnsureLogin.ensureLoggedIn(),async function (requestk, responsek) {
     if (requestk.user.role === "admin") {
       try {
         const launchedElection = await electionModel.launchAnElection(
@@ -1053,7 +1049,7 @@ app.put(
   }
 );
 
-app.get("/e/:url/", async (requestaa, responseaa) => {
+app.get("/e/:url/", async function (requestaa, responseaa){
   if (!requestaa.user) {
     requestaa.flash("error", "Please do login before trying to vote!!!");
     return responseaa.redirect(`/e/${requestaa.params.url}/voter`);
