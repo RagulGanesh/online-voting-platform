@@ -97,6 +97,9 @@
                     <div class="flex-none">
                         <button type="submit" class="bg-cyan-600 text-white px-5 py-1.5 rounded mr-2 mb-2 hover:text-indigo-900">+ Add answer option</button>
                     </div>
+                    <div class="flex-none">
+                        <a type="submit" href="/elections/<%= id %>/questions" class="bg-cyan-600 text-white px-5 py-1.5 rounded mr-2 mb-2 hover:text-indigo-900">	&lt; -- Go Back</a>
+                    </div>
                 </div>
             </form>
             <p class="text-cyan-800"><%= (options.length==0)?"You haven't added any options yet!":"" %></p>

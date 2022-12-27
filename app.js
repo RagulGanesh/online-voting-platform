@@ -814,6 +814,7 @@ app.get(
             title: elections.electionName,
             id: request9.params.electionID,
             voters,
+            electionID: request9.params.electionID,
             csrfToken: request9.csrfToken(),
           });
         } else {
