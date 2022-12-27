@@ -53,7 +53,7 @@
     <div class=" flex  text-gray-800 antialiased flex-col  overflow-hidden bg-gray-50 py-6 sm:py-12 px-20">
         <div class="w-full">
             <div class="flex justify-between">
-                <span class="text-4xl font-light font-serif"><%= title %></span>
+                <span class="text-5xl font-light font-serif"><%= title %></span>
                 
             </div>
             <div>
@@ -74,7 +74,7 @@
                                 <% for(let i=0; i<questions.length; i++) { %>
                                     <li class="my-2">
                                         <div class="px-2 py-1">
-                                            <h3 class="text-2xl my-2 font-serif"><%= questions[i].questionName %></h3>
+                                            <h3 class="text-3xl my-3 font-serif"><%= questions[i].questionName %></h3>
                                             <p class="text-cyan-800 text-md my-2 font-serif"><%= questions[i].description %></p>
                                         </div>
                                         <div class="ml-8">
@@ -82,7 +82,7 @@
                                                 <% for(let j=0; j<options[i].length; j++) { %>
                                                         <li class="option-item mt-2 cursor-pointer">
                                                             <input type="radio" id="<%= options[i][j].id %>" class="cursor-pointer" name="answer-<%= questions[i].id %>">
-                                                            <label class="px-1 my-2 cursor-pointer" for="<%= options[i][j].id %>" class="ml-2 text-lg font-serif"><%= options[i][j].option %></label>
+                                                            <label class="px-2 my-3 cursor-pointer" for="<%= options[i][j].id %>" class="ml-2 text-lg font-serif"><%= options[i][j].option %></label>
                                                         </li>
                                                 <% } %>
                                             </ol>

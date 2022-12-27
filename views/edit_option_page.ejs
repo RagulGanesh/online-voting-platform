@@ -52,10 +52,10 @@
         
 </head>
 <body class="bg-gray-60" background="img/image.jpg">
-    <div class="relative flex min-h-screen text-gray-9000 antialiased flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-14">
+    <div class="relative flex min-h-screen text-gray-9000 antialiased flex-col justify-center overflow-hidden bg-yellow-200 py-6 sm:py-14">
         <div class="relative py-4 sm:w-97 text-center">
             <!-- update question -->
-            <span class="text-3xl font-light font-serif hover:text-indigo-900 text-red-500 u">Update this question</span>
+            <span class="text-3xl font-light font-serif hover:text-indigo-900 text-black u">Update this question</span>
             <div>
                 <% if (messages && messages.error && messages.error.length > 0) { %>
                     <% for(var i=0; i<messages.error.length; i++) { %>
@@ -68,7 +68,7 @@
                 <!-- <div class="h-3 bg-green-400 rounded-t-md"></div> -->
                 <div class="px-8 py-8">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                    <label for="option" class="block mt-3 font-semibold font-serif text-red-500">Options</label>
+                    <label for="option" class="block mt-3 font-semibold font-serif text-black">Options</label>
                     <input value="<%= option %>" id="option" name="option" type="text" placeholder="Option" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
                     <button id="round" class="mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900" onclick="updateOption() ">Update option</button>
                 </div>

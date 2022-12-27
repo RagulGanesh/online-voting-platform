@@ -159,10 +159,8 @@ app.get("/", async function(req, res){
 //elections home page
 //this is the home page for elections
 //the page that opens where the admin can add elections
-app.get(
-  "/elections",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (request1, response1) {
+app.get("/elections",
+  connectEnsureLogin.ensureLoggedIn(),async function (request1, response1) {
     if (request1.user.role === "admin") {
       let loggedinuser = request1.user.firstName + " " + request1.user.lastName;
       try {
@@ -263,8 +261,7 @@ app.get("/e/:url/voter", async function (request4, response4) {
 
 //login user
 //this is the page where the user can log in
-app.post(
-  "/session",
+app.post("/session",
   passport.authenticate("Admin", {
     failureRedirect: "/login",
     failureFlash: true,
@@ -276,8 +273,7 @@ app.post(
 
 //login voter
 //this is the post route where the voter can login
-app.post(
-  "/e/:url/voter",
+app.post("/e/:url/voter",
   passport.authenticate("Voter", {
     failureFlash: true,
   }),
@@ -286,106 +282,9 @@ app.post(
   }
 );
 
-//signout
-//this is the route for signing out the user
-app.get("/signout", function (request6, response6, next){
-  request6.logout((err1) => {
-    if (err1) {
-      return next(err1);
-    }
-    response6.redirect("/");
-  });
-});
-
-//password reset page
-//this is the page from where we can reset the password
-app.get(
-  "/password-reset",
-  connectEnsureLogin.ensureLoggedIn(),
-  function(request7, response7) {
-    if (request7.user.role === "admin") {
-      response7.render("reset_password_page", {
-        title: "Reset your password",
-        csrfToken: request7.csrfToken(),
-      });
-    } else if (request7.user.role === "voter") {
-      return response7.redirect("/");
-    }
-  }
-);
-
-//reset user password
-//this is the place where we can reset the user password
-app.post(
-  "/password-reset",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (request8, response8) {
-    if (request8.user.role === "admin") {
-      if (!request8.body.old_password) {
-        request8.flash("error", "please do enter your old password!!!");
-        return response8.redirect("/password-reset");
-      }
-      if (!request8.body.new_password) {
-        request8.flash("error", "please do enter a new password!!!");
-        return response8.redirect("/password-reset");
-      }
-      if (request8.body.new_password.length < 8) {
-        request8.flash("error", "length of password should be atleast of 8 characters!!!");
-        return response8.redirect("/password-reset");
-      }
-      const hashedNewPwd = await bcrypt.hash(
-        request8.body.new_password,
-        saltRounds
-      );
-      const result = await bcrypt.compare(
-        request8.body.old_password,
-        request8.user.password
-      );
-      if (result) {
-        try {
-          adminModel.findOne({ where: { email: request8.user.email } }).then(
-            (user) => {
-              user.resetPassword(hashedNewPwd);
-            }
-          );
-          request8.flash("success", "password has been changed successfully!!!");
-          return response8.redirect("/elections");
-        } catch (error1) {
-          console.log(error1);
-          return response8.status(422).json(error1);
-        }
-      } else {
-        request8.flash("error", "old password does not match, please do check it again");
-        return response8.redirect("/password-reset");
-      }
-    } else if (request8.user.role === "voter") {
-      return response8.redirect("/");
-    }
-  }
-);
-
-//new election page
-//this is a page when a new election is created
-app.get(
-  "/elections/create",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(request9, response9) {
-    if (request9.user.role === "admin") {
-      return response9.render("new_election_page", {
-        title: "create an election",
-        csrfToken: request9.csrfToken(),
-      });
-    } else if (request9.user.role === "voter") {
-      return response9.redirect("/");
-    }
-  }
-);
-
 //creating new election
 //here we are creating a new election
-app.post(
-  "/elections",
-  connectEnsureLogin.ensureLoggedIn(),
+app.post("/elections",connectEnsureLogin.ensureLoggedIn(),
   async function (request11, response11) {
     if (request11.user.role === "admin") {
       if (request11.body.electionName.length < 5) {
@@ -421,12 +320,26 @@ app.post(
   }
 );
 
+//new election page
+//this is a page when a new election is created
+app.get("/elections/create",
+  connectEnsureLogin.ensureLoggedIn(),async function(request9, response9) {
+    if (request9.user.role === "admin") {
+      return response9.render("new_election_page", {
+        title: "create an election",
+        csrfToken: request9.csrfToken(),
+      });
+    } else if (request9.user.role === "voter") {
+      return response9.redirect("/");
+    }
+  }
+);
+
+
 //election page
 //this is the election page
-app.get(
-  "/elections/:id",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (req, res) {
+app.get("/elections/:id",
+  connectEnsureLogin.ensureLoggedIn(),async function (req, res) {
     if (req.user.role === "admin") {
       try {
         const election1 = await electionModel.getElection(req.params.id);
@@ -452,12 +365,36 @@ app.get(
   }
 );
 
+//add question page
+//this is the page from where we can add the questions
+app.get("/elections/:id/questions/create",
+  connectEnsureLogin.ensureLoggedIn(),async function (request2, response1){
+    if (request2.user.role === "admin") {
+      try {
+        const election3 = await electionModel.getElection(request2.params.id);
+        if (!election3.launch) {
+          return response1.render("new_question_page", {
+            id: request2.params.id,
+            csrfToken: request2.csrfToken(),
+          });
+        } else {
+          request2.flash("error", "can't edit while election is in running mode");
+          return response1.redirect(`/elections/${request2.params.id}/`);
+        }
+      } catch (error1) {
+        console.log(error1);
+        return response1.status(422).json(error1);
+      }
+    } else if (request2.user.role === "voter") {
+      return response1.redirect("/");
+    }
+  }
+);
+
 //manage questions page
 //this is the page from where you can manage the questions
-app.get(
-  "/elections/:id/questions",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (request1, response) {
+app.get("/elections/:id/questions",
+  connectEnsureLogin.ensureLoggedIn(),async function (request1, response) {
     if (request1.user.role === "admin") {
       try {
         const election2 = await electionModel.getElection(request1.params.id);
@@ -489,40 +426,10 @@ app.get(
   }
 );
 
-//add question page
-//this is the page from where we can add the questions
-app.get(
-  "/elections/:id/questions/create",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (request2, response1){
-    if (request2.user.role === "admin") {
-      try {
-        const election3 = await electionModel.getElection(request2.params.id);
-        if (!election3.launch) {
-          return response1.render("new_question_page", {
-            id: request2.params.id,
-            csrfToken: request2.csrfToken(),
-          });
-        } else {
-          request2.flash("error", "can't edit while election is in running mode");
-          return response1.redirect(`/elections/${request2.params.id}/`);
-        }
-      } catch (error1) {
-        console.log(error1);
-        return response1.status(422).json(error1);
-      }
-    } else if (request2.user.role === "voter") {
-      return response1.redirect("/");
-    }
-  }
-);
-
 //add question
 //this is the page from where we can add the questions
-app.post(
-  "/elections/:id/questions/create",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (request3, response3){
+app.post("/elections/:id/questions/create",
+  connectEnsureLogin.ensureLoggedIn(),async function (request3, response3){
     if (request3.user.role === "admin") {
       if (request3.body.questionName.length < 5) {
         request3.flash("error", "Length of question should be of atleast 5 characters");
@@ -557,10 +464,8 @@ app.post(
 
 //edit question page
 //this the page where we can edit the questions
-app.get(
-  "/elections/:electionID/questions/:questionID/edit",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (request5, response5){
+app.get("/elections/:electionID/questions/:questionID/edit",
+  connectEnsureLogin.ensureLoggedIn(),async function (request5, response5){
     if (request5.user.role === "admin") {
       try {
         const elections = await electionModel.getElection(request5.params.electionID);
@@ -588,10 +493,8 @@ app.get(
 
 //edit question
 //you can edit the question from here
-app.put(
-  "/questions/:questionID/edit",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(request6, response6)  {
+app.put("/questions/:questionID/edit",
+  connectEnsureLogin.ensureLoggedIn(),async function(request6, response6)  {
     if (request6.user.role === "admin") {
       if (request6.body.questionName.length < 5) {
         request6.flash("error", "Length of question should be of atleast 5 characters");
@@ -618,10 +521,8 @@ app.put(
 
 //delete question
 //delete the unnecessary questions
-app.delete(
-  "/elections/:electionID/questions/:questionID",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(request7, response7) {
+app.delete("/elections/:electionID/questions/:questionID",
+  connectEnsureLogin.ensureLoggedIn(),async function(request7, response7) {
     if (request7.user.role === "admin") {
       try {
         const nq = await questionsModel.getNumberOfQuestionss(
@@ -645,10 +546,8 @@ app.delete(
 
 //question page
 //page of questions
-app.get(
-  "/elections/:id/questions/:questionID",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(request8, response8)  {
+app.get("/elections/:id/questions/:questionID",
+  connectEnsureLogin.ensureLoggedIn(),async function(request8, response8)  {
     if (request8.user.role === "admin") {
       try {
         const questions = await questionsModel.getQuestion(request8.params.questionID);
@@ -684,10 +583,8 @@ app.get(
 
 //adding options
 //option are being added from here
-app.post(
-  "/elections/:id/questions/:questionID",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(request9, response9) {
+app.post("/elections/:id/questions/:questionID",
+  connectEnsureLogin.ensureLoggedIn(),async function(request9, response9) {
     if (request9.user.role === "admin") {
       if (!request9.body.option) {
         request9.flash("error", "please do enter an option!!!");
@@ -720,10 +617,8 @@ app.post(
 
 //delete options
 //options can deleted when this route is visited
-app.delete(
-  "/options/:optionID",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(request12, response12) {
+app.delete("/options/:optionID",
+  connectEnsureLogin.ensureLoggedIn(),async function(request12, response12) {
     if (request12.user.role === "admin") {
       try {
         const res = await optionModel.deleteAnOption(request12.params.optionID);
@@ -739,10 +634,8 @@ app.delete(
 );
 
 //edit option page
-app.get(
-  "/elections/:electionID/questions/:questionID/options/:optionID/edit",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(requesta, responsea) {
+app.get("/elections/:electionID/questions/:questionID/options/:optionID/edit",
+  connectEnsureLogin.ensureLoggedIn(),async function(requesta, responsea) {
     if (requesta.user.role === "admin") {
       try {
         const electiona = await electionModel.getElection(requesta.params.electionID);
@@ -773,10 +666,8 @@ app.get(
 
 
 
-app.put(
-  "/options/:optionID/edit",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (requestb, responseb) {
+app.put("/options/:optionID/edit",
+  connectEnsureLogin.ensureLoggedIn(),async function (requestb, responseb) {
     if (requestb.user.role === "admin") {
       if (!requestb.body.option) {
         requestb.flash("error", "Please do enter an option");
@@ -802,11 +693,25 @@ app.put(
 
 
 
+//add voter page
+//this is the page where we can add voters
+app.get("/elections/:electionID/voters/create",
+  connectEnsureLogin.ensureLoggedIn(),async function(requeste, responsee) {
+    if (requeste.user.role === "admin") {
+      responsee.render("new_voters_page", {
+        title: "Add a voter to election",
+        electionID: requeste.params.electionID,
+        csrfToken: requeste.csrfToken(),
+      });
+    } else if (requeste.user.role === "voter") {
+      return responsee.redirect("/");
+    }
+  }
+);
+
 //voter page
-app.get(
-  "/elections/:electionID/voters",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(request9, response9) {
+app.get("/elections/:electionID/voters",
+  connectEnsureLogin.ensureLoggedIn(),async function(request9, response9) {
     if (request9.user.role === "admin") {
       try {
         const voters = await voterModel.gettVoters(request9.params.electionID);
@@ -834,30 +739,11 @@ app.get(
   }
 );
 
-//add voter page
-//this is the page where we can add voters
-app.get(
-  "/elections/:electionID/voters/create",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(requeste, responsee) {
-    if (requeste.user.role === "admin") {
-      responsee.render("new_voters_page", {
-        title: "Add a voter to election",
-        electionID: requeste.params.electionID,
-        csrfToken: requeste.csrfToken(),
-      });
-    } else if (requeste.user.role === "voter") {
-      return responsee.redirect("/");
-    }
-  }
-);
 
 //add voter
 //this is where the admin can register the voters using voterid and password
-app.post(
-  "/elections/:electionID/voters/create",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function(requestr, responser) {
+app.post("/elections/:electionID/voters/create",
+  connectEnsureLogin.ensureLoggedIn(),async function(requestr, responser) {
     if (requestr.user.role === "admin") {
       if (!requestr.body.voterid) {
         requestr.flash("error", "please do enter voterID!!!");
@@ -899,10 +785,10 @@ app.post(
   }
 );
 
+
 //delete voter
 //to delete unnecessary voter
-app.delete(
-  "/elections/:electionID/voters/:voterID",
+app.delete("/elections/:electionID/voters/:voterID",
   connectEnsureLogin.ensureLoggedIn(),async function(requestz, responsez) {
     if (requestz.user.role === "admin") {
       try {
@@ -918,60 +804,8 @@ app.delete(
   }
 );
 
-//voter password reset page
-app.get(
-  "/elections/:electionID/voters/:voterID/edit",
-  connectEnsureLogin.ensureLoggedIn(),function (requestx,responsex) {
-    if (requestx.user.role === "admin") {
-      responsex.render("voter_password_page", {
-        title: "Reset voter password",
-        electionID: requestx.params.electionID,
-        voterID: requestx.params.voterID,
-        csrfToken: requestx.csrfToken(),
-      });
-    } else if (requestx.user.role === "voter") {
-      return responsex.redirect("/");
-    }
-  }
-);
 
-//reset user password
-//to reset the user password if he has forgotten by which the admin can change it 
-app.post(
-  "/elections/:electionID/voters/:voterID/edit",
-  connectEnsureLogin.ensureLoggedIn(),async function(requestdd, response){
-    if (requestdd.user.role === "admin") {
-      if (!requestdd.body.new_password) {
-        requestdd.flash("error", "Please do enter a new password!!!");
-        return response.redirect("/password-reset");
-      }
-      if (requestdd.body.new_password.length < 8) {
-        requestdd.flash("error", "Length of password should be of atleast 8 characters!!!");
-        return response.redirect("/password-reset");
-      }
-      const hashedNewPwd = await bcrypt.hash(
-        requestdd.body.new_password,
-        saltRounds
-      );
-      try {
-        voterModel.findOne({ where: { id: requestdd.params.voterID } }).then(
-          (user) => {
-            user.resetPassword(hashedNewPwd);
-          }
-        );
-        requestdd.flash("success", "Password has been changed successfully!!!");
-        return response.redirect(
-          `/elections/${requestdd.params.electionID}/voters`
-        );
-      } catch (errordd) {
-        console.log(errordd);
-        return response.status(422).json(errordd);
-      }
-    } else if (requestdd.user.role === "voter") {
-      return response.redirect("/");
-    }
-  }
-);
+
 
 //election preview
 //this is the page like how the voting page looks like when the user opens it
@@ -1029,9 +863,46 @@ app.get("/elections/:electionID/preview",
   }
 );
 
+//reset user password
+//to reset the user password if he has forgotten by which the admin can change it 
+app.post("/elections/:electionID/voters/:voterID/edit",
+  connectEnsureLogin.ensureLoggedIn(),async function(requestdd, response){
+    if (requestdd.user.role === "admin") {
+      if (!requestdd.body.new_password) {
+        requestdd.flash("error", "Please do enter a new password!!!");
+        return response.redirect("/password-reset");
+      }
+      if (requestdd.body.new_password.length < 8) {
+        requestdd.flash("error", "Length of password should be of atleast 8 characters!!!");
+        return response.redirect("/password-reset");
+      }
+      const hashedNewPwd = await bcrypt.hash(
+        requestdd.body.new_password,
+        saltRounds
+      );
+      try {
+        voterModel.findOne({ where: { id: requestdd.params.voterID } }).then(
+          (user) => {
+            user.resetPassword(hashedNewPwd);
+          }
+        );
+        requestdd.flash("success", "Password has been changed successfully!!!");
+        return response.redirect(
+          `/elections/${requestdd.params.electionID}/voters`
+        );
+      } catch (errordd) {
+        console.log(errordd);
+        return response.status(422).json(errordd);
+      }
+    } else if (requestdd.user.role === "voter") {
+      return response.redirect("/");
+    }
+  }
+);
+
 //launch an election
-app.put(
-  "/elections/:electionID/launch",
+//link can be publically accessible and the registered voters can vote
+app.put("/elections/:electionID/launch",
   connectEnsureLogin.ensureLoggedIn(),async function (requestk, responsek) {
     if (requestk.user.role === "admin") {
       try {
@@ -1084,6 +955,17 @@ app.get("/e/:url/", async function (requestaa, responseaa){
   }
 });
 
+//signout
+//this is the route for signing out the user
+app.get("/signout", function (request6, response6, next){
+  request6.logout((err1) => {
+    if (err1) {
+      return next(err1);
+    }
+    response6.redirect("/");
+  });
+});
+
 
 //recent
 //Deleting the election
@@ -1100,10 +982,16 @@ app.get("/e/:url/", async function (requestaa, responseaa){
 //     });
 
 //     // deleting the  questions annd  options  in election
+
+
+
 //     questions.forEach(async (Question) => {
 //       const options = await optionModel.findAll({
 //         where: { QID: Question.id },
 //       });
+
+
+
 //       options.forEach(async (option) => {
 //         await optionModel.destroy({ where: { id: option.id } });
 //       });
@@ -1114,6 +1002,9 @@ app.get("/e/:url/", async function (requestaa, responseaa){
 //     const voters = await voterModel.findAll({
 //       where: { EID: request.params.id },
 //     });
+
+
+
 //     voters.forEach(async (voter) => {
 //       await voters.destroy({ where: { id: voter.id } });
 //     });
@@ -1125,8 +1016,91 @@ app.get("/e/:url/", async function (requestaa, responseaa){
 //       console.log(error);
 //       response.send(error);
 //     }
+
+
 //   }
 // );
+
+//password reset page
+//this is the page from where we can reset the password
+app.get("/password-reset",
+  connectEnsureLogin.ensureLoggedIn(),
+  function(request7, response7) {
+    if (request7.user.role === "admin") {
+      response7.render("reset_password_page", {
+        title: "Reset your password",
+        csrfToken: request7.csrfToken(),
+      });
+    } else if (request7.user.role === "voter") {
+      return response7.redirect("/");
+    }
+  }
+);
+
+//reset user password
+//this is the place where we can reset the user password
+app.post("/password-reset",
+  connectEnsureLogin.ensureLoggedIn(),
+  async function (request8, response8) {
+    if (request8.user.role === "admin") {
+      if (!request8.body.old_password) {
+        request8.flash("error", "please do enter your old password!!!");
+        return response8.redirect("/password-reset");
+      }
+      if (!request8.body.new_password) {
+        request8.flash("error", "please do enter a new password!!!");
+        return response8.redirect("/password-reset");
+      }
+      if (request8.body.new_password.length < 8) {
+        request8.flash("error", "length of password should be atleast of 8 characters!!!");
+        return response8.redirect("/password-reset");
+      }
+      const hashedNewPwd = await bcrypt.hash(
+        request8.body.new_password,
+        saltRounds
+      );
+      const results = await bcrypt.compare(
+        request8.body.old_password,
+        request8.user.password
+      );
+      if (results) {
+        try {
+          adminModel.findOne({ where: { email: request8.user.email } }).then(
+            (user) => {
+              user.resetPassword(hashedNewPwd);
+            }
+          );
+          request8.flash("success", "password has been changed successfully!!!");
+          return response8.redirect("/elections");
+        } catch (error1) {
+          console.log(error1);
+          return response8.status(422).json(error1);
+        }
+      } else {
+        request8.flash("error", "old password does not match, please do check it again");
+        return response8.redirect("/password-reset");
+      }
+    } else if (request8.user.role === "voter") {
+      return response8.redirect("/");
+    }
+  }
+);
+
+//voter password reset page
+app.get("/elections/:electionID/voters/:voterID/edit",
+  connectEnsureLogin.ensureLoggedIn(),function (requestx,responsex) {
+    if (requestx.user.role === "admin") {
+      responsex.render("voter_password_page", {
+        title: "Reset voter password",
+        electionID: requestx.params.electionID,
+        voterID: requestx.params.voterID,
+        csrfToken: requestx.csrfToken(),
+      });
+    } else if (requestx.user.role === "voter") {
+      return responsex.redirect("/");
+    }
+  }
+);
 
 app.use(function (requestt, responset) {
   responset.status(404).render("404_not_found.ejs");

@@ -54,6 +54,8 @@ or
 ```
 start server to run the website in localhost
 
+## Start server
+
 ```bash
   npm start
 ```
