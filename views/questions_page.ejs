@@ -33,7 +33,7 @@
         }
         .one{
             display: flex;
-            flex-direction: row;
+            flex-direction: col;
             overflow: hidden;
         }
       </style>
@@ -62,13 +62,13 @@
                 <h3 class="text-2xl my-2 font-serif"><%= title %></h3>
                 <p class="text-cyan-800 text-md my-2 font-serif"><%= description %></p>
             </div>
-            <div class="ml-12">
+            <div class="ml-12 flex flex-col">
                 <ol class="list-decimal">
                     <% for(let i=0; i<options.length; i++) { %>
                         <li class="option-item">
-                            <div class="one justify-between items-center w-full my-2 px-2 py-1 rounded-lg bg-green-100">
+                            <div class="justify-between w-full my-2 px-2 py-1 rounded-lg bg-green-100">
                                 <p class="ml-2 text-lg font-serif"><%= options[i].option %></p>
-                                <div class="flex gap-2 text-cyan-800">
+                                <div class="flex floex-col gap-2 text-cyan-800">
                                 <div class="rounded w-fit px-2 py-1 flex gap-2 cursor-pointer hover:text-cyan-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mt-1">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
@@ -90,7 +90,7 @@
             <!-- form for posting -->
             <form action="/elections/<%= id %>/questions/<%= questionID %>" method="post">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                <div class="flex gap-2 py-4">
+                <div class="flex flex-col gap-2 py-4">
                     <div class="flex-auto">
                         <input type="text" name="option" placeholder="Enter an option" class="border border-gray-300 text-gray-900 w-full rounded p-2 text-sm" required />
                     </div>

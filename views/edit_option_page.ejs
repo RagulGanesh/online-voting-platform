@@ -53,7 +53,7 @@
 </head>
 <body class="bg-gray-60" background="img/image.jpg">
     <div class="relative flex min-h-screen text-gray-9000 antialiased flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-14">
-        <div class="relative py-4 sm:w-97 mx-auto text-center">
+        <div class="relative py-4 sm:w-97 text-center">
             <!-- update question -->
             <span class="text-3xl font-light font-serif hover:text-indigo-900 text-red-500 u">Update question</span>
             <div>
@@ -64,8 +64,8 @@
                 <% } %>
             </div>
             <!-- option and updateOption -->
-            <div class="mt-6 bg-white shadow-md rounded-lg text-left">
-                <div class="h-3 bg-green-400 rounded-t-md"></div>
+            <div class="mt-6 rounded-lg text-left">
+                <!-- <div class="h-3 bg-green-400 rounded-t-md"></div> -->
                 <div class="px-8 py-8">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <label for="option" class="block mt-3 font-semibold font-serif text-red-500">Options</label>
@@ -73,7 +73,7 @@
                     <button id="round" class="mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900" onclick="updateOption() ">Update option</button>
                 </div>
             </div>
-            <div class="h-3 bg-green-400 rounded-t-md"></div>
+            <!-- <div class="h-3 bg-green-400 rounded-t-md"></div> -->
         </div>
     </div>
 </body>

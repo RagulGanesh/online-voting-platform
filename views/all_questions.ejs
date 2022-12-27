@@ -59,9 +59,6 @@
     <div class="my-6 mx-10 bg-yellow-200">
         <div class="flex gap-2 py-4 justify-between">
             <h5 class="text-2xl font-serif"><%= title %> - Questions</h5>
-            <div class="bg-cyan-800 rounded w-fit px-2 py-1 hover:bg-cyan-600">
-                <a href="/elections/<%= id %>/questions/create" class="text-white font-serif hover:text-indigo-900">+ Add new question</a>
-            </div>
         </div>
         <!-- using flex box -->
         <div class="flex-auto">
@@ -70,7 +67,7 @@
                 <ol class="list-decimal">
                     <% for (let i=0; i<questions.length; i++) { %>
                         <li>
-                            <div class="flex justify-between items-center w-full my-2 px-2 py-2 rounded hover:bg-green-200">
+                            <div class="flex flex-col  w-full my-2 px-2 py-2 rounded hover:bg-green-200">
                                 <div>
                                     <a href="/elections/<%= id %>/questions/<%= questions[i].id %>" class="my-3 text-lg text-cyan-600 "><%= questions[i].questionName %></a>
                                     <p class="text-cyan-800 text-md my-2 font-serif"><%= questions[i].description %></p>
@@ -96,6 +93,9 @@
                     <% } %>
                 </ol>
             </div>
+        </div>
+        <div class="bg-cyan-800 rounded w-fit px-2 py-1 hover:bg-cyan-600">
+            <a href="/elections/<%= id %>/questions/create" class="text-white font-serif hover:text-indigo-900">+ Add new question</a>
         </div>
     </div>
 </body>

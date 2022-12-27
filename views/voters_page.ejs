@@ -42,9 +42,6 @@
     <div class="my-6 mx-10">
         <div class="flex gap-2 py-4 justify-between">
             <h5 class="text-2xl font-serif"><%= title %> - Voters are : </h5>
-            <div class="bg-cyan-800 rounded w-fit px-2 py-1 hover:bg-cyan-600">
-                <a href="/elections/<%= id %>/voters/create" class="text-white font-serif">+ Add voter</a>
-            </div>
         </div>
         <div class="flex-auto bg-yellow-200">
             <div class="mx-4">  
@@ -53,7 +50,7 @@
                 <ol class="list-decimal">
                     <% for (let i=0; i<voters.length; i++) { %>
                         <li>
-                            <div class="flex justify-between items-center w-full my-2 px-2 py-1 rounded hover:bg-green-100 font-serif">
+                            <div class="flex flex-col justify-between w-full my-2 px-2 py-1 rounded hover:bg-green-100 font-serif">
                                 <p class="my-2 text-lg text-cyan-600 font-serif"><%= voters[i].voterid %></p>
                                 <div class="flex gap-2 text-cyan-800">
                                     <div class="rounded w-fit px-2 py-1 flex gap-2 cursor-pointer hover:text-cyan-600">
@@ -73,6 +70,11 @@
                         </li>
                     <% } %>
                 </ol>
+            </div>
+        </div>
+        <div class="flex gap-2 py-4 justify-between">
+            <div class="bg-cyan-800 rounded w-fit px-2 py-1 hover:bg-cyan-600">
+                <a href="/elections/<%= id %>/voters/create" class="text-white font-serif">+ Add voter</a>
             </div>
         </div>
     </div>

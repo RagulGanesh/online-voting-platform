@@ -37,6 +37,12 @@
         justify-content: space-around;
         align-items: center;
       }
+      .but1{
+        background-color: white;
+        opacity: .5;
+        padding: 5px;
+        border-radius: 50px;
+      }
       </style>
 </head>
 <body background="img/image2.jpg">
@@ -60,7 +66,7 @@
         <% if (launch) { %>
             <div class="py-8">
                 <h4 class="text-3xl my-5 font-medium">Your election has been launched!!!</h4>
-                <h2 class="my-3 text-lg text-black" align="center">Voters can vote from the url:</h2>
+                <h4 class="text-3xl my-5 font-medium">URL :</h4>
                 <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-white text-2xl">Click Here!!!</a>
                 <!-- <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900">https://localhost:3000/e/<%= url %></a> -->
             </div>
@@ -69,13 +75,13 @@
         <div class="mt-4">
             <h2 class="my-2 text-2xl text-black flex font-serif py-4 c">Number of questions in the ballot are : <span class="text-cyan-600 font-serif text-2xl"> <%= nq %> </span></h2>
             <% if (!launch) { %>
-                <a href="/elections/<%= id %>/questions" class="py-4 hover:text-white text-cyan-600 font-serif text-2xl">You can manage your questions for the elections from here!!!</a>
+                <a href="/elections/<%= id %>/questions" class="but1 py-4 hover:text-black text-cyan-600 font-serif text-2xl">Manage Questions</a>
             <% } %>
         </div>
         <!-- shows number of registered voters -->
         <div class="mb-8 bt-4">
             <h2 class="my-3 text-2xl text-black flex gap-3 font-serif py-4 c">Number of registered voters for the election : <span class="text-cyan-600 font-serif text-2xl"> <%= nv %> </span></h2>
-            <a href="/elections/<%= id %>/voters" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif hover:text-white text-2xl">You can manage your voters for the election from here!!!</a>
+            <a href="/elections/<%= id %>/voters" class="but1 py-4 hover:text-cyan-800 text-cyan-600 font-serif hover:text-black text-2xl">Manage Voters</a>
         </div>
         <!-- preview and lauch the election -->
         <% if (!launch) { %>
