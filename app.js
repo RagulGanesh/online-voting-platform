@@ -133,7 +133,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //landing page
 //This is the first page seen when the user enters the root url
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   if (req.user) {
     console.log(req.user);
     if (req.user.role === "admin") {
@@ -198,7 +198,7 @@ app.get("/signup", (request2, response2) => {
 
 //create user account
 //this is the page where the admin can create his/her account
-app.post("/admin", async (req, res) => {
+app.post("/admin", async function(req, res) {
   if (!req.body.firstName) {
     req.flash("error", "Please do enter your first name!!!");
     return res.redirect("/signup");
@@ -239,7 +239,7 @@ app.post("/admin", async (req, res) => {
 
 //login page
 //this is where the admin can login
-app.get("/login", (request3, response3) => {
+app.get("/login", async (request3, response3) => {
   if (request3.user) {
     return response3.redirect("/elections");
   }
@@ -251,7 +251,7 @@ app.get("/login", (request3, response3) => {
 
 //voter login page
 //this is the page where the voter can login
-app.get("/e/:url/voter", (request4, response4) => {
+app.get("/e/:url/voter", function (request4, response4) {
   response4.render("login_voter", {
     title: "Login in as Voter",
     url: request4.params.url,
@@ -279,7 +279,7 @@ app.post(
   passport.authenticate("Voter", {
     failureFlash: true,
   }),
-  async (request5, response5) => {
+  async function(request5, response5) {
     return response5.redirect(`/e/${request5.params.url}`);
   }
 );
