@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- this is the new question page -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,11 +27,21 @@
             flex-wrap: wrap;
             overflow: hidden;
         }
+        .six{
+            background-color: rgb(106, 104, 104);
+            border: 2px solid aqua;
+        }
+        .seven{
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
       </style>
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
+    <!-- this is the new question page -->
     <%- include('header.ejs') %>
-    <div class="flex gap-1 mx-10 mt-6 bg-gray-50">
+    <div class="flex gap-1 mx-10 mt-6 bg-green-200">
         <span>--></span>
         <a href="/elections" class="text-cyan-800 hover:text-cyan-600 font-serif">All Elections</a>
         <span>--></span>
@@ -38,7 +49,7 @@
         <span>--></span>
         <a href="/elections/<%= id %>/questions" class="text-cyan-800 hover:text-cyan-600 font-serif">Questions</a>
     </div>
-    <div class=" flex text-gray-800 antialiased flex-col  overflow-hidden bg-gray-50 py-6 sm:py-12">
+    <div class="text-gray-800 antialiased bg-yellow-200 py-6 sm:py-12">
         <div class=" py-3 sm:w-96 mx-auto text-center">
             <span class="text-2xl font-light font-serif text-red-500">Add a new Question</span>
             <div>
@@ -48,19 +59,22 @@
                     <% } %>
                 <% } %>
             </div>
+            <!-- this is the new question page -->
             <div class="mt-4 bg-white shadow-md rounded-lg text-left">
                 <div class="h-2 bg-green-400 rounded-t-md"></div>
                 <form action="/elections/<%= id %>/questions/create" method="post" class="px-8 py-6">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <label for="questionName" class="block mt-3 font-semibold font-serif text-red-500">What is the question?</label>
-                    <input id="questionName" name="questionName" type="text" placeholder="Question" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
+                    <input id="questionName" name="questionName" type="text" placeholder="Question" class="six border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
                     <label for="description" class="block mt-3 font-semibold font-serif text-red-500">Description</label>
-                    <textarea id="description" name="description" class="border w-full px-2 py-1 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" placeholder="Description" rows="4" cols="20"></textarea>
+                    <textarea id="description" name="description" class="six border w-full px-2 py-1 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" placeholder="Description" rows="4" cols="20"></textarea>
                     <button type="submit" id="round" class="mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900">Add question</button>
                 </form>
                 <div class="h-2 bg-green-400 rounded-t-md"></div>
             </div>
         </div>
+        <!-- this is the new question page -->
+        <!-- this is the new question page -->
     </div>
 </body>
 </html>

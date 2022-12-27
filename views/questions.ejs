@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+        //function for deleting the question
         function deleteQuestion({electionID, questionID}) {
             fetch(`/elections/${electionID}/questions/${questionID}`, {
                 method: "delete",
@@ -40,6 +41,7 @@
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
     <%- include('header.ejs') %>
+    <!-- including header file -->
     <div class="rounded-lg px-6 py-2">
         <% if (messages && messages.error && messages.error.length > 0) { %>
             <% for(var i=0; i<messages.error.length; i++) { %>
@@ -47,27 +49,28 @@
             <% } %>
         <% } %>
         </div>
-    <div class="flex gap-1 mx-10 mt-6 bg-gray-50">
+    <div class="flex gap-1 mx-10 mt-6 bg-green-200">
         <span>--></span>
         <a href="/elections" class="text-cyan-800 hover:text-cyan-600 font-serif">All Elections</a>
         <span>--></span>
         <a href="/elections/<%= id %>/" class="text-cyan-800 hover:text-cyan-600 font-serif">Election</a>
     </div>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-    <div class="my-6 mx-10">
+    <div class="my-6 mx-10 bg-yellow-200">
         <div class="flex gap-2 py-4 justify-between">
             <h5 class="text-2xl font-serif"><%= title %> - Questions</h5>
             <div class="bg-cyan-800 rounded w-fit px-2 py-1 hover:bg-cyan-600">
                 <a href="/elections/<%= id %>/questions/create" class="text-white font-serif hover:text-indigo-900">+ Add new question</a>
             </div>
         </div>
+        <!-- using flex box -->
         <div class="flex-auto">
             <div class="mx-4">  
                 <p class="text-cyan-600 font-serif"><%= (questions.length==0)?"You haven't added any questions yet!":"" %></p>
                 <ol class="list-decimal">
                     <% for (let i=0; i<questions.length; i++) { %>
                         <li>
-                            <div class="flex justify-between items-center w-full my-2 px-2 py-2 rounded hover:bg-green-50">
+                            <div class="flex justify-between items-center w-full my-2 px-2 py-2 rounded hover:bg-green-200">
                                 <div>
                                     <a href="/elections/<%= id %>/questions/<%= questions[i].id %>" class="my-3 text-lg text-cyan-600 "><%= questions[i].questionName %></a>
                                     <p class="text-cyan-800 text-md my-2 font-serif"><%= questions[i].description %></p>

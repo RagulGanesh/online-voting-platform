@@ -32,7 +32,7 @@
 </head>
 <body background="img/image.jpg">
     <%- include('header.ejs') %>
-    <div class="flex gap-1 mx-10 mt-6 bg-gray-50">
+    <div class="flex gap-1 mx-10 mt-6 bg-green-200">
         <span>--></span>
         <a href="/elections" class="text-cyan-800 hover:text-cyan-600">All Elections</a>
         <span>--></span>
@@ -46,8 +46,9 @@
                 <a href="/elections/<%= id %>/voters/create" class="text-white font-serif">+ Add voter</a>
             </div>
         </div>
-        <div class="flex-auto">
+        <div class="flex-auto bg-yellow-200">
             <div class="mx-4">  
+                <!-- crud operations for voter -->
                 <p class="text-green-500 font-serif"><%= (voters.length==0)?"You haven't added any voters yet!":"" %></p>
                 <ol class="list-decimal">
                     <% for (let i=0; i<voters.length; i++) { %>

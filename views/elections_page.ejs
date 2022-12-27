@@ -49,19 +49,19 @@
     <% } %>
     </div>
     <!-- breadcrumbs -->
-    <div class="flex gap-2 mx-12 mt-7 bg-gray-50">
+    <div class="flex gap-2 mx-12 mt-7 bg-green-200">
         <span>--></span>
         <a href="/elections" class="text-cyan-800 hover:text-cyan-600 font-serif hover:text-indigo-900">Here are all the elections!!!</a>
         <span>--></span>
     </div>
-    <div class="my-5 mx-10">
+    <div class="my-5 mx-10 bg-yellow-200">
         <h3 class="text-3xl my-3 font-medium"><%= title %></h3>
         <!-- if launch show this -->
         <% if (launch) { %>
             <div class="py-8">
                 <h4 class="text-3xl my-5 font-medium">Your election has been launched!!!</h4>
                 <h2 class="my-3 text-lg text-black" align="center">Voters can vote from the url:</h2>
-                <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900 text-2xl">Click Here!!!</a>
+                <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-white text-2xl">Click Here!!!</a>
                 <!-- <a href="/e/<%= url %>/" class="py-3 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 hover:text-indigo-900">https://localhost:3000/e/<%= url %></a> -->
             </div>
         <% } %>
@@ -69,13 +69,13 @@
         <div class="mt-4">
             <h2 class="my-2 text-2xl text-black flex font-serif py-4 c">Number of questions in the ballot are : <span class="text-cyan-600 font-serif text-2xl"> <%= nq %> </span></h2>
             <% if (!launch) { %>
-                <a href="/elections/<%= id %>/questions" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif text-2xl">You can manage your questions for the elections from here!!!</a>
+                <a href="/elections/<%= id %>/questions" class="py-4 hover:text-white text-cyan-600 font-serif text-2xl">You can manage your questions for the elections from here!!!</a>
             <% } %>
         </div>
         <!-- shows number of registered voters -->
         <div class="mb-8 bt-4">
             <h2 class="my-3 text-2xl text-black flex gap-3 font-serif py-4 c">Number of registered voters for the election : <span class="text-cyan-600 font-serif text-2xl"> <%= nv %> </span></h2>
-            <a href="/elections/<%= id %>/voters" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif hover:text-indigo-900 text-2xl">You can manage your voters for the election from here!!!</a>
+            <a href="/elections/<%= id %>/voters" class="py-4 hover:text-cyan-800 text-cyan-600 font-serif hover:text-white text-2xl">You can manage your voters for the election from here!!!</a>
         </div>
         <!-- preview and lauch the election -->
         <% if (!launch) { %>

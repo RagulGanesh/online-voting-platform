@@ -25,6 +25,10 @@
             display: flex;
             flex-direction: row;
         }
+        .six{
+                background-color: rgb(106, 104, 104);
+                border: 2px solid aqua;
+            }
       </style>
 </head>
 <!-- page where the voter can login using the voterid and password -->
@@ -36,7 +40,7 @@
           </a>
         </div>
     </nav>
-    <div class=" flex  text-gray-800 antialiased flex-col  overflow-hidden bg-gray-50 py-6 sm:py-12">
+    <div class=" flex  text-gray-800 antialiased flex-col  overflow-hidden bg-yellow-200 py-6 sm:py-12">
         <div class=" py-3 sm:w-96 mx-auto text-center">
             <span class="text-2xl font-light font-serif hover:text-indigo-900 text-red-500 u">Login in as Voter</span>
             <div>
@@ -46,14 +50,15 @@
                     <% } %>
                 <% } %>
             </div>
+            <!-- page where the voter can login using the voterid and password -->
             <div class="mt-5 bg-white shadow-md rounded-lg text-left">
                 <div class="h-2 bg-cyan-400 rounded-t-md"></div>
                 <form action="/e/<%= url %>/voter/" method="post" class="px-10 py-8">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <label for="voterid" class="block mt-4 font-bold font-serif text-red-400">Voter ID</label>
-                    <input id="voterid" name="voterid" type="text" placeholder="Voter ID" class="border w-full h-5 px-5 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
+                    <input id="voterid" name="voterid" type="text" placeholder="Voter ID" class="six border w-full h-5 px-5 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
                     <label for="password" class="block mt-3 font-semibold font-serif text-red-400">Password</label>
-                    <input id="password" name="password" type="password" placeholder="Password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
+                    <input id="password" name="password" type="password" placeholder="Password" class="six border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
                     <button type="submit" id="round" class="mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900">Login</button>
                 </form>
             </div>
@@ -61,3 +66,5 @@
     </div>
 </body>
 </html>
+<!-- page where the voter can login using the voterid and password -->
+<!-- page where the voter can login using the voterid and password -->

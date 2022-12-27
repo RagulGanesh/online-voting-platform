@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- this is the new voter page -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,12 +22,21 @@
             display: flex;
             flex-direction: row;
         }
+        .six{
+            background-color: rgb(106, 104, 104);
+            border: 2px solid aqua;
+        }
+        .seven{
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
       </style>
     <link rel="icon" type="image/x-icon" href="/img/vote.png">
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
     <%- include('header.ejs') %>
-    <div class="flex gap-1 mx-10 mt-6 bg-gray-50">
+    <div class="flex gap-1 mx-10 mt-6 bg-green-200">
         <span>--></span>
         <a href="/elections" class="text-cyan-800 hover:text-cyan-600 font-serif">All Elections</a>
         <span>--></span>
@@ -34,7 +44,7 @@
         <span>--></span>
         <a href="/elections/<%= electionID %>/voters" class="text-cyan-800 hover:text-cyan-600 font-serif">Voters</a>
     </div>
-    <div class=" flex  text-gray-800 antialiased flex-col  overflow-hidden bg-gray-50 py-6 sm:py-12">
+    <div class="seven text-gray-800 antialiased bg-yellow-200 py-6 sm:py-12">
         <div class=" py-3 sm:w-96 mx-auto text-center">
             <span class="text-2xl font-light font-serif text-red-400"><%= title %></span>
             <div>
@@ -44,14 +54,15 @@
                     <% } %>
                 <% } %>
             </div>
+            <!-- form for adding new voter -->
             <div class="mt-5 bg-white shadow-md rounded-lg text-left">
                 <div class="h-3 bg-green-400 rounded-t-md"></div>
                 <form action="/elections/<%= electionID %>/voters/create" method="post" class="px-8 py-6">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <label for="voterid" class="block mt-5 font-semibold font-serif text-red-400">Voter ID</label>
-                    <input id="voterid" name="voterid" type="voterid" placeholder="Voter ID" class="border w-full h-5 px-5 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
+                    <input id="voterid" name="voterid" type="voterid" placeholder="Voter ID" class="six border w-full h-5 px-5 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
                     <label for="password" class="block mt-5 font-semibold font-serif text-red-400">Password</label>
-                    <input id="password" name="password" type="password" placeholder="Password" class="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
+                    <input id="password" name="password" type="password" placeholder="Password" class="six border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
                     <button type="submit" id="round" class="mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900">Add voter</button>
                 </form>
                 <div class="h-3 bg-green-400 rounded-t-md"></div>
