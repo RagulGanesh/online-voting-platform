@@ -369,7 +369,7 @@ app.get(
   connectEnsureLogin.ensureLoggedIn(),
   async (request9, response9) => {
     if (request9.user.role === "admin") {
-      return response9.render("new_election", {
+      return response9.render("new_election_page", {
         title: "create an election",
         csrfToken: request9.csrfToken(),
       });
@@ -462,7 +462,7 @@ app.get(
         const questions2 = await questionsModel.getQuestionss(request1.params.id);
         if (!election2.running) {
           if (request1.accepts("html")) {
-            return response.render("questions", {
+            return response.render("all_questions", {
               title: election2.electionName,
               id: request1.params.id,
               questions: questions2,
@@ -838,7 +838,7 @@ app.get(
   connectEnsureLogin.ensureLoggedIn(),
   (requeste, responsee) => {
     if (requeste.user.role === "admin") {
-      responsee.render("new_voter", {
+      responsee.render("new_voters_page", {
         title: "Add a voter to election",
         electionID: requeste.params.electionID,
         csrfToken: requeste.csrfToken(),
