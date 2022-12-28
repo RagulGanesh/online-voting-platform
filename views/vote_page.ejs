@@ -17,11 +17,11 @@
                 body: JSON.stringify({
                     "_csrf":token,
                 })
-            }).then((res)=>{
-                if (res.ok) {
+            }).then((res1)=>{
+                if (res1.ok) {
                     window.location.replace(`/elections/${electionID}`);
                 }
-            }).catch((err)=> console.error(err))
+            }).catch((err1)=> console.error(err1))
         }
     </script>
         <style>
@@ -38,13 +38,14 @@
             .two{
                 display: flex;
                 flex-direction: row;
+                flex-wrap: wrap;
             }
           </style>
     <link rel="icon" type="image/x-icon" href="/img/vote.png">
 </head>
 <body class="bg-gray-50" background="img/image.jpg">
     <nav>
-        <div class="container flex flex-wrap items-center justify-between mx-auto">
+        <div class="container two items-center justify-between mx-auto">
           <a href="/" class="py-2 px-4 flex items-center">
             <span class="self-center text-xl font-semibold whitespace-nowrap text-cyan-800">e-Voting</span>
           </a>

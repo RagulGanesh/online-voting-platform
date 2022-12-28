@@ -29,12 +29,18 @@
                 background-color: rgb(106, 104, 104);
                 border: 2px solid aqua;
             }
+        .z{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+        }
       </style>
 </head>
 <!-- page where the voter can login using the voterid and password -->
-<body class="bg-gray-50" background="img/image.jpg">
+<body class="bg-gray-100" background="img/image.jpg">
     <nav>
-        <div class="container flex flex-wrap items-center justify-between">
+        <div class="z container items-center justify-between">
           <a href="/" class="py-2 px-4 flex items-center">
             <span class="self-center text-xl font-semibold whitespace-nowrap text-cyan-800">e-Voting</span>
           </a>
@@ -46,7 +52,7 @@
             <div>
                 <% if (messages && messages.error && messages.error.length > 0) { %>
                     <% for(var i=0; i<messages.error.length; i++) { %>
-                        <p class="bg-cyan-100 my-3 list-none rounded-md px-4 py-2 font-serif"><%= messages.error[i] %></p>
+                        <p class="bg-white my-3 list-none rounded-md px-4 py-2 font-serif"><%= messages.error[i] %></p>
                     <% } %>
                 <% } %>
             </div>
@@ -56,7 +62,7 @@
                 <form action="/e/<%= url %>/voter/" method="post" class="px-10 py-8">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <label for="voterid" class="block mt-4 font-bold font-serif text-black">Voter ID</label>
-                    <input id="voterid" name="voterid" type="text" placeholder="Voter ID" class="six border w-full h-5 px-5 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
+                    <input id="voterid" name="voterid" type="text" placeholder="Voter ID" class="six border w-full h-5 px-5 py-5 mt-2 rounded-md" required>
                     <label for="password" class="block mt-3 font-semibold font-serif text-black">Password</label>
                     <input id="password" name="password" type="password" placeholder="Password" class="six border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
                     <button type="submit" id="round" class="mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900">Login</button>

@@ -98,7 +98,7 @@ passport.use(
           }
         })
         .catch(() => {
-          return done(null, false, { message: "It's an invalid email-id!!!" });
+          return done(null, false, { message: "It's an invalid voter-id!!!" });
         });
     }
   )
@@ -275,6 +275,7 @@ app.post("/session",
 //this is the post route where the voter can login
 app.post("/e/:url/voter",
   passport.authenticate("Voter", {
+    failureRedirect: "/e/${request5.params.url}/voter",
     failureFlash: true,
   }),
   async function(request5, response5) {
@@ -699,7 +700,7 @@ app.get("/elections/:electionID/voters/create",
   connectEnsureLogin.ensureLoggedIn(),async function(requeste, responsee) {
     if (requeste.user.role === "admin") {
       responsee.render("new_voters_page", {
-        title: "Add a voter to election",
+        title: "Warning!!!",
         electionID: requeste.params.electionID,
         csrfToken: requeste.csrfToken(),
       });
@@ -966,144 +967,5 @@ app.get("/signout", function (request6, response6, next){
   });
 });
 
-
-//recent
-//Deleting the election
-// app.delete(
-//   "/elections/:id",
-//   connectEnsureLogin.ensureLoggedIn(),
-//   async (request, response) => {
-
-//     //const election = await electionModel.findByPk(request.params.id);
-
-
-//     const questions = await questionsModel.findAll({
-//       where: { EID: request.params.id },
-//     });
-
-//     // deleting the  questions annd  options  in election
-
-
-
-//     questions.forEach(async (Question) => {
-//       const options = await optionModel.findAll({
-//         where: { QID: Question.id },
-//       });
-
-
-
-//       options.forEach(async (option) => {
-//         await optionModel.destroy({ where: { id: option.id } });
-//       });
-//       await questionsModel.destroy({ where: { id: Question.id } });
-//     });
-
-//     //deleting all voters from  the  election
-//     const voters = await voterModel.findAll({
-//       where: { EID: request.params.id },
-//     });
-
-
-
-//     voters.forEach(async (voter) => {
-//       await voters.destroy({ where: { id: voter.id } });
-//     });
-
-//     try {
-//       await electionModel.destroy({ where: { id: request.params.id } });
-//       return response.json({ ok: true });
-//     } catch (error) {
-//       console.log(error);
-//       response.send(error);
-//     }
-
-
-//   }
-// );
-
-//password reset page
-//this is the page from where we can reset the password
-app.get("/password-reset",
-  connectEnsureLogin.ensureLoggedIn(),
-  function(request7, response7) {
-    if (request7.user.role === "admin") {
-      response7.render("reset_password_page", {
-        title: "Reset your password",
-        csrfToken: request7.csrfToken(),
-      });
-    } else if (request7.user.role === "voter") {
-      return response7.redirect("/");
-    }
-  }
-);
-
-//reset user password
-//this is the place where we can reset the user password
-app.post("/password-reset",
-  connectEnsureLogin.ensureLoggedIn(),
-  async function (request8, response8) {
-    if (request8.user.role === "admin") {
-      if (!request8.body.old_password) {
-        request8.flash("error", "please do enter your old password!!!");
-        return response8.redirect("/password-reset");
-      }
-      if (!request8.body.new_password) {
-        request8.flash("error", "please do enter a new password!!!");
-        return response8.redirect("/password-reset");
-      }
-      if (request8.body.new_password.length < 8) {
-        request8.flash("error", "length of password should be atleast of 8 characters!!!");
-        return response8.redirect("/password-reset");
-      }
-      const hashedNewPwd = await bcrypt.hash(
-        request8.body.new_password,
-        saltRounds
-      );
-      const results = await bcrypt.compare(
-        request8.body.old_password,
-        request8.user.password
-      );
-      if (results) {
-        try {
-          adminModel.findOne({ where: { email: request8.user.email } }).then(
-            (user) => {
-              user.resetPassword(hashedNewPwd);
-            }
-          );
-          request8.flash("success", "password has been changed successfully!!!");
-          return response8.redirect("/elections");
-        } catch (error1) {
-          console.log(error1);
-          return response8.status(422).json(error1);
-        }
-      } else {
-        request8.flash("error", "old password does not match, please do check it again");
-        return response8.redirect("/password-reset");
-      }
-    } else if (request8.user.role === "voter") {
-      return response8.redirect("/");
-    }
-  }
-);
-
-//voter password reset page
-app.get("/elections/:electionID/voters/:voterID/edit",
-  connectEnsureLogin.ensureLoggedIn(),function (requestx,responsex) {
-    if (requestx.user.role === "admin") {
-      responsex.render("voter_password_page", {
-        title: "Reset voter password",
-        electionID: requestx.params.electionID,
-        voterID: requestx.params.voterID,
-        csrfToken: requestx.csrfToken(),
-      });
-    } else if (requestx.user.role === "voter") {
-      return responsex.redirect("/");
-    }
-  }
-);
-
-app.use(function (requestt, responset) {
-  responset.status(404).render("404_not_found.ejs");
-});
 
 module.exports = app;
