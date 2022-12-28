@@ -53,6 +53,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //use passport for admin
+//authentication for admin
 passport.use(
   "Admin",
   new LocalStratergy(
@@ -80,6 +81,7 @@ passport.use(
 );
 
 //use password as voter
+//authentication for voter
 passport.use(
   "Voter",
   new LocalStratergy(
@@ -109,6 +111,7 @@ passport.serializeUser((user, done) => {
   done(null, { id: user.id, role: user.role });
 });
 //deserializing user as passport
+//for admin and voter
 passport.deserializeUser((id, done) => {
   if (id.role === "admin") {
     adminModel.findByPk(id.id)
@@ -162,19 +165,15 @@ app.get("/", async function(req, res){
 app.get("/elections",
   connectEnsureLogin.ensureLoggedIn(),async function (request1, response1) {
     if (request1.user.role === "admin") {
-      let loggedinuser = request1.user.firstName + " " + request1.user.lastName;
+      let loggedInUser = request1.user.firstName + " " + request1.user.lastName;
       try {
         const elections = await electionModel.getelections(request1.user.id);
         if (request1.accepts("html")) {
           response1.render("elections", {
-            title: "Online Voting Platform",
-            userName: loggedinuser,
-            elections,
+            title: "Online Voting Platform",userName: loggedInUser,elections,
           });
         } else {
-          return response1.json({
-            elections,
-          });
+          return response1.json({elections,});
         }
       } catch (error3) {
         console.log(error3);
@@ -190,10 +189,7 @@ app.get("/elections",
 //this is where the user can sign-up
 //this is opened when we dont have an account and to create an account
 app.get("/signup", function(request2, response2) {
-  response2.render("signup", {
-    title: "create an admin account",
-    csrfToken: request2.csrfToken(),
-  });
+  response2.render("signup", {title: "create an admin account",csrfToken: request2.csrfToken(),});
 });
 
 //create user account
@@ -215,13 +211,13 @@ app.post("/admin", async function(req, res) {
     req.flash("error", "Length of password should be atleast of 8 characters!!!");
     return res.redirect("/signup");
   }
-  const hashedPwd1 = await bcrypt.hash(req.body.password, saltRounds);
+  const hashedPassword1 = await bcrypt.hash(req.body.password, saltRounds);
   try {
     const user = await adminModel.createAnAdmin({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: hashedPwd1,
+      password: hashedPassword1,
     });
     req.login(user, (err) => {
       if (err) {
@@ -232,7 +228,7 @@ app.post("/admin", async function(req, res) {
       }
     });
   } catch (error12) {
-    req.flash("error", "Email id is already in use by someone else");
+    req.flash("error", "Email id is already in use by someone else!!!");
     return res.redirect("/signup");
   }
 });
@@ -243,24 +239,21 @@ app.get("/login", async function (request3, response3){
   if (request3.user) {
     return response3.redirect("/elections");
   }
-  response3.render("login_page", {
-    title: "Login to your account",
-    csrfToken: request3.csrfToken(),
-  });
+  response3.render("login_page", {title: "Login to your account",csrfToken: request3.csrfToken(),});
 });
 
 //voter login page
 //this is the page where the voter can login
 app.get("/e/:url/voter", async function (request4, response4) {
-  response4.render("login_voter", {
-    title: "Login in as Voter",
-    url: request4.params.url,
+  response4.render("login_voter", {title: "Login in as Voter",url: request4.params.url,
     csrfToken: request4.csrfToken(),
   });
 });
 
 //login user
 //this is the page where the user can log in
+//start the session for admin
+//if failed redirect to /login else redirect to /elections
 app.post("/session",
   passport.authenticate("Admin", {
     failureRedirect: "/login",
@@ -273,6 +266,7 @@ app.post("/session",
 
 //login voter
 //this is the post route where the voter can login
+//authencticate the voter if true redirect to /e/url(the one posted by user)
 app.post("/e/:url/voter",
   passport.authenticate("Voter", {
     failureRedirect: "/e/${request5.params.url}/voter",
@@ -285,6 +279,7 @@ app.post("/e/:url/voter",
 
 //creating new election
 //here we are creating a new election
+//constraints for election name, length of url(custome one)
 app.post("/elections",connectEnsureLogin.ensureLoggedIn(),
   async function (request11, response11) {
     if (request11.user.role === "admin") {
@@ -312,7 +307,7 @@ app.post("/elections",connectEnsureLogin.ensureLoggedIn(),
         });
         return response11.redirect("/elections");
       } catch (error) {
-        request11.flash("error", "Email id is already used by someone else");
+        request11.flash("error", "URL is already used by someone else");
         return response11.redirect("/elections/create");
       }
     } else if (request11.user.role === "voter") {
@@ -320,6 +315,8 @@ app.post("/elections",connectEnsureLogin.ensureLoggedIn(),
     }
   }
 );
+//if constraints are validated create model, if same url is given for the election 
+//show an error and give a different one 
 
 //new election page
 //this is a page when a new election is created
@@ -339,6 +336,8 @@ app.get("/elections/create",
 
 //election page
 //this is the election page
+//this page gives us the public url, number of voters, number of questions in the ballot
+//title of the election
 app.get("/elections/:id",
   connectEnsureLogin.ensureLoggedIn(),async function (req, res) {
     if (req.user.role === "admin") {
@@ -368,6 +367,7 @@ app.get("/elections/:id",
 
 //add question page
 //this is the page from where we can add the questions
+//this is the page where we can create the questions
 app.get("/elections/:id/questions/create",
   connectEnsureLogin.ensureLoggedIn(),async function (request2, response1){
     if (request2.user.role === "admin") {
@@ -394,6 +394,7 @@ app.get("/elections/:id/questions/create",
 
 //manage questions page
 //this is the page from where you can manage the questions
+//this page shows all the questions, and we can add questions, delete questions etc..
 app.get("/elections/:id/questions",
   connectEnsureLogin.ensureLoggedIn(),async function (request1, response) {
     if (request1.user.role === "admin") {
@@ -434,11 +435,8 @@ app.post("/elections/:id/questions/create",
     if (request3.user.role === "admin") {
       if (request3.body.questionName.length < 5) {
         request3.flash("error", "Length of question should be of atleast 5 characters");
-        return response3.redirect(
-          `/elections/${request3.params.id}/questions/create`
-        );
+        return response3.redirect(`/elections/${request3.params.id}/questions/create`);
       }
-
       try {
         const election = await electionModel.getElection(request3.params.id);
         if (election.launch) {
@@ -450,9 +448,7 @@ app.post("/elections/:id/questions/create",
           description: request3.body.description,
           electionID: request3.params.id,
         });
-        return response3.redirect(
-          `/elections/${request3.params.id}/questions/${question.id}`
-        );
+        return response3.redirect(`/elections/${request3.params.id}/questions/${question.id}`);
       } catch (error1) {
         console.log(error1);
         return response3.status(422).json(error1);
@@ -465,6 +461,8 @@ app.post("/elections/:id/questions/create",
 
 //edit question page
 //this the page where we can edit the questions
+//admin can edit the questions here
+//for a particular election
 app.get("/elections/:electionID/questions/:questionID/edit",
   connectEnsureLogin.ensureLoggedIn(),async function (request5, response5){
     if (request5.user.role === "admin") {
@@ -500,7 +498,7 @@ app.put("/questions/:questionID/edit",
       if (request6.body.questionName.length < 5) {
         request6.flash("error", "Length of question should be of atleast 5 characters");
         return response6.json({
-          error: "Question length should be atleast 5",
+          error: "Lenght of questions should be atleast of 5 characters",
         });
       }
       try {
@@ -522,14 +520,17 @@ app.put("/questions/:questionID/edit",
 
 //delete question
 //delete the unnecessary questions
+//only when number of questions are greater than two
 app.delete("/elections/:electionID/questions/:questionID",
   connectEnsureLogin.ensureLoggedIn(),async function(request7, response7) {
     if (request7.user.role === "admin") {
       try {
+        //to get number of questions
         const nq = await questionsModel.getNumberOfQuestionss(
           request7.params.electionID
         );
         if (nq > 1) {
+          //to delete a question
           const res1 = await questionsModel.deleteAQuestion(request7.params.questionID);
           return response7.json({ success: res1 === 1 });
         } else {
@@ -551,6 +552,8 @@ app.get("/elections/:id/questions/:questionID",
   connectEnsureLogin.ensureLoggedIn(),async function(request8, response8)  {
     if (request8.user.role === "admin") {
       try {
+        //we are retrieving questions, options and election
+        //when the election is launched we cant edit the questions
         const questions = await questionsModel.getQuestion(request8.params.questionID);
         const options = await optionModel.getOptionss(request8.params.questionID);
         const election = await electionModel.getElection(request8.params.id);
@@ -618,6 +621,8 @@ app.post("/elections/:id/questions/:questionID",
 
 //delete options
 //options can deleted when this route is visited
+//deleting an option
+//only the admin can delete
 app.delete("/options/:optionID",
   connectEnsureLogin.ensureLoggedIn(),async function(request12, response12) {
     if (request12.user.role === "admin") {
@@ -664,7 +669,7 @@ app.get("/elections/:electionID/questions/:questionID/options/:optionID/edit",
 
 
 //update options
-
+//route for updating the options
 
 
 app.put("/options/:optionID/edit",
@@ -696,6 +701,7 @@ app.put("/options/:optionID/edit",
 
 //add voter page
 //this is the page where we can add voters
+//create new voters
 app.get("/elections/:electionID/voters/create",
   connectEnsureLogin.ensureLoggedIn(),async function(requeste, responsee) {
     if (requeste.user.role === "admin") {
@@ -726,9 +732,7 @@ app.get("/elections/:electionID/voters",
             csrfToken: request9.csrfToken(),
           });
         } else {
-          return response9.json({
-            voters,
-          });
+          return response9.json({voters,});
         }
       } catch (error9) {
         console.log(error9);
@@ -764,11 +768,11 @@ app.post("/elections/:electionID/voters/create",
           `/elections/${requestr.params.electionID}/voters/create`
         );
       }
-      const hashedPwd1 = await bcrypt.hash(requestr.body.password, saltRounds);
+      const hashedPassword1 = await bcrypt.hash(requestr.body.password, saltRounds);
       try {
-        await voterModel.createVoter({
+        await voterModel.createAVoter({
           voterid: requestr.body.voterid,
-          password: hashedPwd1,
+          password: hashedPassword1,
           electionID: requestr.params.electionID,
         });
         return responser.redirect(
@@ -842,9 +846,7 @@ app.get("/elections/:electionID/preview",
             "error",
             "Make sure to please add atleast one question in the ballot!!!"
           );
-          return responsel.redirect(
-            `/elections/${request.params.electionID}/questions`
-          );
+          return responsel.redirect(`/elections/${requestl.params.electionID}/questions`);
         }
 
         return responsel.render("vote_preview_page", {
@@ -864,42 +866,6 @@ app.get("/elections/:electionID/preview",
   }
 );
 
-//reset user password
-//to reset the user password if he has forgotten by which the admin can change it 
-app.post("/elections/:electionID/voters/:voterID/edit",
-  connectEnsureLogin.ensureLoggedIn(),async function(requestdd, response){
-    if (requestdd.user.role === "admin") {
-      if (!requestdd.body.new_password) {
-        requestdd.flash("error", "Please do enter a new password!!!");
-        return response.redirect("/password-reset");
-      }
-      if (requestdd.body.new_password.length < 8) {
-        requestdd.flash("error", "Length of password should be of atleast 8 characters!!!");
-        return response.redirect("/password-reset");
-      }
-      const hashedNewPwd = await bcrypt.hash(
-        requestdd.body.new_password,
-        saltRounds
-      );
-      try {
-        voterModel.findOne({ where: { id: requestdd.params.voterID } }).then(
-          (user) => {
-            user.resetPassword(hashedNewPwd);
-          }
-        );
-        requestdd.flash("success", "Password has been changed successfully!!!");
-        return response.redirect(
-          `/elections/${requestdd.params.electionID}/voters`
-        );
-      } catch (errordd) {
-        console.log(errordd);
-        return response.status(422).json(errordd);
-      }
-    } else if (requestdd.user.role === "voter") {
-      return response.redirect("/");
-    }
-  }
-);
 
 //launch an election
 //link can be publically accessible and the registered voters can vote
@@ -921,6 +887,7 @@ app.put("/elections/:electionID/launch",
   }
 );
 
+//live url
 app.get("/e/:url/", async function (requestaa, responseaa){
   if (!requestaa.user) {
     requestaa.flash("error", "Please do login before trying to vote!!!");
@@ -966,6 +933,43 @@ app.get("/signout", function (request6, response6, next){
     response6.redirect("/");
   });
 });
+
+//reset user password
+//to reset the user password if he has forgotten by which the admin can change it 
+app.post("/elections/:electionID/voters/:voterID/edit",
+  connectEnsureLogin.ensureLoggedIn(),async function(requestdd, response){
+    if (requestdd.user.role === "admin") {
+      if (!requestdd.body.new_password) {
+        requestdd.flash("error", "Please do enter a new password!!!");
+        return response.redirect("/password-reset");
+      }
+      if (requestdd.body.new_password.length < 8) {
+        requestdd.flash("error", "Length of password should be of atleast 8 characters!!!");
+        return response.redirect("/password-reset");
+      }
+      const hashedNewPwd = await bcrypt.hash(
+        requestdd.body.new_password,
+        saltRounds
+      );
+      try {
+        voterModel.findOne({ where: { id: requestdd.params.voterID } }).then(
+          (user) => {
+            user.resetPassword(hashedNewPwd);
+          }
+        );
+        requestdd.flash("success", "Password has been changed successfully!!!");
+        return response.redirect(
+          `/elections/${requestdd.params.electionID}/voters`
+        );
+      } catch (errordd) {
+        console.log(errordd);
+        return response.status(422).json(errordd);
+      }
+    } else if (requestdd.user.role === "voter") {
+      return response.redirect("/");
+    }
+  }
+);
 
 
 module.exports = app;
