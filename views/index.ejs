@@ -21,6 +21,20 @@
         display: flex;
         flex-direction: row;
       }
+      .three{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+      .four{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+      }
       .round{
         background-color: rgb(255, 255, 255);
         border-radius: 50px;
@@ -38,21 +52,16 @@
   </head>
   <body class="bg-gray-50" background="img/image2.jpg">
     <nav>
-      <div
-        class="container flex flex-wrap items-center justify-between mx-auto"
-      >
+      <div class="container flex flex-wrap items-center justify-between mx-auto">
         <a href="/" class="py-2 px-4 flex items-center">
-          <span
-            class="self-center text-xl font-semibold whitespace-nowrap text-cyan-400 hover:text-white"
-            >e-Voting</span
-          >
+          <span class="self-center text-xl font-semibold whitespace-nowrap text-cyan-400 hover:text-white">e-Voting</span>
         </a>
       </div>
     </nav>
     <div>
       <% if (messages && messages.error && messages.error.length > 0) { %>
           <% for(var i=0; i<messages.error.length; i++) { %>
-              <p class="bg-cyan-100 my-3 list-none rounded-md px-4 py-2 font-serif"><%= messages.error[i] %></p>
+              <p class="bg-white my-3 list-none rounded-md px-4 py-2 font-serif"><%= messages.error[i] %></p>
           <% } %>
       <% } %>
   </div>

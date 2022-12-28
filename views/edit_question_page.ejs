@@ -75,7 +75,7 @@
             <div>
                 <% if (messages && messages.error && messages.error.length > 0) { %>
                     <% for(var i=0; i<messages.error.length; i++) { %>
-                        <p class="bg-cyan-100 my-3 list-none rounded-md px-4 py-2 font-serif"><%= messages.error[i] %></p>
+                        <p class="bg-white my-3 list-none rounded-md px-4 py-2 font-serif"><%= messages.error[i] %></p>
                     <% } %>
                 <% } %>
             </div>
@@ -87,7 +87,7 @@
                     <label for="questionName" class="block mt-3 font-semibold font-serif text-black">Question</label>
                     <input value="<%= questionName %>" id="questionName" name="questionName" type="text" placeholder="Question" class="six border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" required>
                     <label for="description" class="block mt-3 font-semibold font-serif text-black">Description</label>
-                    <textarea id="description" name="description" class="six border w-full px-2 py-1 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" placeholder="Description" rows="4" cols="20"><%= description %></textarea>
+                    <textarea id="description" name="description" class="six border w-full px-2 py-1 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" placeholder="Question Description" rows="8" cols="20"><%= description %></textarea>
                     <button id="round" class="mt-6 w-full bg-cyan-500 text-white py-2 px-6 rounded-md hover:bg-cyan-600 font-serif hover:text-indigo-900" onclick="updateAQuestion()">Update question</button>
                 </div>
                 <!-- <div class="h-2 bg-green-500 rounded-t-md"></div> -->

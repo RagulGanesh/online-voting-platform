@@ -9,7 +9,7 @@
     <title><%= title %></title>
     <script>
         var token = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-        function launchElection() {
+        function launchThisElection() {
             let electionID = <%= electionID %>;
             fetch(`/elections/${electionID}/launch`, {
                 method: "put",
@@ -34,6 +34,16 @@
                 flex-direction: column;
                 overflow: hidden;
             }
+            .two{
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+            .three{
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
           </style>
     <link rel="icon" type="image/x-icon" href="/img/vote.png">
 </head>
@@ -52,9 +62,10 @@
                 <span class="text-4xl font-light font-serif"><%= title %></span>
             </div>
             <div>
+                <!-- if error -->
                 <% if (messages && messages.error && messages.error.length > 0) { %>
                     <% for(var i=0; i<messages.error.length; i++) { %>
-                        <p class="bg-cyan-100 my-3 list-none rounded-md px-4 py-2"><%= messages.error[i] %></p>
+                        <p class="bg-white my-3 list-none rounded-md px-4 py-2"><%= messages.error[i] %></p>
                     <% } %>
                 <% } %>
             </div>
@@ -89,7 +100,7 @@
             <div class="bg-cyan-100 border border-cyan-700 text-cyan-800 rounded w-fit px-4 pt-2 hover:text-white hover:bg-cyan-600 mx-2 ease-linear transition-all duration-150">
                 <a href="/elections/<%= electionID %>/">Edit election</a>
             </div>
-            <button onclick="launchElection()" class="bg-cyan-100 border border-cyan-700 text-cyan-800 rounded w-fit px-4 pt-2 hover:text-white hover:bg-cyan-600 mx-2 ease-linear transition-all duration-150">
+            <button onclick="launchThisElection()" class="bg-cyan-100 border border-cyan-700 text-cyan-800 rounded w-fit px-4 pt-2 hover:text-white hover:bg-cyan-600 mx-2 ease-linear transition-all duration-150">
                 Launch election
             </button>
         </div>

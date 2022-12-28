@@ -75,7 +75,7 @@
             <div>
                 <% if (messages && messages.error && messages.error.length > 0) { %>
                     <% for(var i=0; i<messages.error.length; i++) { %>
-                        <p class="bg-cyan-100 my-3 list-none rounded-md px-4 py-2"><%= messages.error[i] %></p>
+                        <p class="bg-white my-3 list-none rounded-md px-4 py-2"><%= messages.error[i] %></p>
                     <% } %>
                 <% } %>
             </div>
@@ -84,12 +84,12 @@
                 <!-- <div class="h-2 bg-green-400 rounded-t-md"></div> -->
                 <div class="divide-y divide-solid">
                     <h2 class="px-4 py-2 text-2xl font-light font-serif text-red-500"><u>Answer the below questions</u></h2>
-                    <div class="pb-2 px-8">
+                    <div class="pb-3 px-10">
                         <form action="" class="divide-y divide-solid">
-                            <ol class="list-decimal mb-5">
+                            <ol class="list-decimal mb-6">
                                 <% for(let i=0; i<questions.length; i++) { %>
                                     <li class="my-2">
-                                        <div class="px-2 py-1">
+                                        <div class="px-3 py-2">
                                             <h3 class="text-3xl my-3 font-serif"><%= questions[i].questionName %></h3>
                                             <p class="text-cyan-800 text-md my-2 font-serif"><%= questions[i].description %></p>
                                         </div>
@@ -106,11 +106,13 @@
                                     </li>
                                 <% } %>
                             </ol>
+
                             <div class="flex py-4">
                                 <button type="submit" id="round" class="text-white bg-cyan-800 rounded w-fit px-4 py-1 hover:bg-cyan-600 ml-2 ease-linear transition-all duration-150 hover:text-indigo-900">
                                     Submit vote
                                 </button>
                             </div>
+
                         </form>
                     </div>
                 </div>

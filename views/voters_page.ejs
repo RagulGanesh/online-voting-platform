@@ -15,11 +15,11 @@
                 body: JSON.stringify({
                     "_csrf":token
                 })
-            }).then((res)=>{
-                if (res.ok) {
+            }).then((ress)=>{
+                if (ress.ok) {
                     window.location.reload();
                 }
-            }).catch((err)=> console.error(err))
+            }).catch((err1)=> console.error(err1))
         }
     </script>
     <title><%= title %></title>

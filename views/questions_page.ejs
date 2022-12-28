@@ -41,6 +41,7 @@
 <body class="bg-gray-50" background="img/image.jpg">
     <%- include('header.ejs') %>
     <!-- including header file -->
+
     <div class="flex gap-1 mx-10 mt-6 bg-green-200">
         <span>--></span>
         <a href="/elections" class="text-cyan-800 hover:text-cyan-600 font-serif">All Elections</a>
@@ -49,12 +50,13 @@
         <span>--></span>
         <a href="/elections/<%= id %>/questions" class="text-cyan-800 hover:text-cyan-600 font-serif">Questions</a>
     </div>
+
     <div class="grid grid-cols-6 bg-yellow-200">
         <div class="col-start-2 col-span-4">
             <div class="rounded-lg px-6 py-3">
                 <% if (messages && messages.error && messages.error.length > 0) { %>
                     <% for(var i=0; i<messages.error.length; i++) { %>
-                        <p class="bg-cyan-100 my-3 list-none rounded-md px-4 py-2 font-serif"><%= messages.error[i] %></p>
+                        <p class="bg-white my-3 list-none rounded-md px-4 py-2 font-serif"><%= messages.error[i] %></p>
                     <% } %>
                 <% } %>
                 </div>
@@ -105,6 +107,7 @@
                     </div>
                 </div>
             </form>
+            <!-- if number of options == 0 -->
             <p class="text-cyan-800"><%= (options.length==0)?"You haven't added any options yet!":"" %></p>
         </div>
     </div>

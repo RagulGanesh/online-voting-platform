@@ -59,7 +59,7 @@
             <!-- page where the voter can login using the voterid and password -->
             <div class="mt-5 shadow-md rounded-lg text-left">
                 <!-- <div class="h-2 bg-cyan-400 rounded-t-md"></div> -->
-                <form action="/e/<%= url %>/voter/" method="post" class="px-10 py-8">
+                <form action="/e/<%= url %>/voter/" method="post" class="px-12 py-8">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                     <label for="voterid" class="block mt-4 font-bold font-serif text-black">Voter ID</label>
                     <input id="voterid" name="voterid" type="text" placeholder="Voter ID" class="six border w-full h-5 px-5 py-5 mt-2 rounded-md" required>
