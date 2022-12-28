@@ -438,8 +438,8 @@ app.post("/elections/:id/questions/create",
         return response3.redirect(`/elections/${request3.params.id}/questions/create`);
       }
       try {
-        const election = await electionModel.getElection(request3.params.id);
-        if (election.launch) {
+        const elections = await electionModel.getElection(request3.params.id);
+        if (elections.launch) {
           request3.flash("error", "can't edit while election is in running mode");
           return response3.redirect(`/elections/${request3.params.id}/`);
         }
@@ -502,12 +502,12 @@ app.put("/questions/:questionID/edit",
         });
       }
       try {
-        const updatedQuestion = await questionsModel.updateAQuestion({
+        const updatedQuestionIs = await questionsModel.updateAQuestion({
           questionName: request6.body.questionName,
           description: request6.body.description,
           id: request6.params.questionID,
         });
-        return response6.json(updatedQuestion);
+        return response6.json(updatedQuestionIs);
       } catch (error6) {
         console.log(error6);
         return response6.status(422).json(error6);
@@ -526,10 +526,10 @@ app.delete("/elections/:electionID/questions/:questionID",
     if (request7.user.role === "admin") {
       try {
         //to get number of questions
-        const nq = await questionsModel.getNumberOfQuestionss(
+        const numq = await questionsModel.getNumberOfQuestionss(
           request7.params.electionID
         );
-        if (nq > 1) {
+        if (numq > 1) {
           //to delete a question
           const res1 = await questionsModel.deleteAQuestion(request7.params.questionID);
           return response7.json({ success: res1 === 1 });
@@ -682,11 +682,11 @@ app.put("/options/:optionID/edit",
         });
       }
       try {
-        const updatedOptions = await optionModel.updateAnOption({
+        const updatedOptionsAre = await optionModel.updateAnOption({
           id: requestb.params.optionID,
           option: requestb.body.option,
         });
-        return responseb.json(updatedOptions);
+        return responseb.json(updatedOptionsAre);
       } catch (errorb) {
         console.log(errorb);
         return responseb.status(422).json(errorb);
@@ -752,9 +752,7 @@ app.post("/elections/:electionID/voters/create",
     if (requestr.user.role === "admin") {
       if (!requestr.body.voterid) {
         requestr.flash("error", "please do enter voterID!!!");
-        return responser.redirect(
-          `/elections/${requestr.params.electionID}/voters/create`
-        );
+        return responser.redirect(`/elections/${requestr.params.electionID}/voters/create`);
       }
       if (!requestr.body.password) {
         requestr.flash("error", "please do enter your password!!!");
