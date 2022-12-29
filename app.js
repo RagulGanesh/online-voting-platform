@@ -921,6 +921,11 @@ app.get("/e/:url/", async function (requestaa, responseaa){
   }
 });
 
+//success page
+app.get("/success",async function(req,res){
+  res.render("success_page");
+})
+
 //signout
 //this is the route for signing out the user
 app.get("/signout", function (request6, response6, next){
@@ -931,43 +936,6 @@ app.get("/signout", function (request6, response6, next){
     response6.redirect("/");
   });
 });
-
-//reset user password
-//to reset the user password if he has forgotten by which the admin can change it 
-app.post("/elections/:electionID/voters/:voterID/edit",
-  connectEnsureLogin.ensureLoggedIn(),async function(requestdd, response){
-    if (requestdd.user.role === "admin") {
-      if (!requestdd.body.new_password) {
-        requestdd.flash("error", "Please do enter a new password!!!");
-        return response.redirect("/password-reset");
-      }
-      if (requestdd.body.new_password.length < 8) {
-        requestdd.flash("error", "Length of password should be of atleast 8 characters!!!");
-        return response.redirect("/password-reset");
-      }
-      const hashedNewPwd = await bcrypt.hash(
-        requestdd.body.new_password,
-        saltRounds
-      );
-      try {
-        voterModel.findOne({ where: { id: requestdd.params.voterID } }).then(
-          (user) => {
-            user.resetPassword(hashedNewPwd);
-          }
-        );
-        requestdd.flash("success", "Password has been changed successfully!!!");
-        return response.redirect(
-          `/elections/${requestdd.params.electionID}/voters`
-        );
-      } catch (errordd) {
-        console.log(errordd);
-        return response.status(422).json(errordd);
-      }
-    } else if (requestdd.user.role === "voter") {
-      return response.redirect("/");
-    }
-  }
-);
 
 
 module.exports = app;
