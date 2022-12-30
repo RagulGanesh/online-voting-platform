@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title><%= title %></title>
+    <link rel="icon" type="image/x-icon" href="/img/vote.png">
+    <style>
+        body{
+            background-size: cover;
+            background-color:rgb(174, 169, 169);
+        }
+        .signup{
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content:center;
+            margin: auto;
+            overflow: hidden;
+        }
+        #roundButton{
+            border-radius:100px;
+        }
+        .two{
+            display: flex;
+            flex-direction: row;
+        }
+        .three{
+            display: flex;
+            flex-direction: row;
+        }
+        .six{
+            background-color: rgb(106, 104, 104);
+            border: 2px solid aqua;
+        }
+        .round{
+        background-color: rgb(255, 255, 255);
+        border-radius: 50px;
+        padding: 10px;
+      }
+      .box{
+        width: 100%;
+      }
+      label,input{
+        display: inline;
+      }
+    </style>
+</head>
+<!-- class="bg-gray-50" -->
+<body background="img/image2.jpg">
+    <nav>
+        <div class="container flex flex-wrap items-center justify-between mx-auto">
+          <a href="/" class="py-2 px-4 flex items-center">
+            <span class="self-center text-xl font-semibold whitespace-nowrap text-cyan-400 hover:text-indigo-900">e-Voting</span>
+          </a>
+        </div>
+    </nav>
+    <div class="signup text-cyan-400 py-6 sm:py-12">
+        <div class=" py-3 sm:w-100 mx-auto text-center">
+            <!-- <span class="text-2xl font-light font-serif hover:text-indigo-900 text-decoration-line: underline text-red-400">Let's Login</span> -->
+            <div>
+                <% if (messages && messages.error && messages.error.length > 0) { %>
+                    <% for(var i=0; i<messages.error.length; i++) { %>
+                        <p class="bg-white my-3 list-none rounded-md px-4 py-2 font-serif"><%= messages.error[i] %></p>
+                    <% } %>
+                <% } %>
+            </div>
+            <!-- page where the admin can login -->
+            <div class="box shadow-md rounded-lg text-left content-center">
+                
+                <!-- <div class="h-2 bg-green-400 rounded-t-md"></div> -->
+                <form action="/session" method="post" class="px-10 py-10">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                    <label class="text-2xl font-light font-serif hover:text-indigo-900 text-decoration-line: underline text-white">Let's Login</label>
+                    <label for="email" class="block mt-4 font-semibold font-serif text-white">Email</label>
+                    <input id="email" name="email" type="email" placeholder="Email" class="six border w-full h-5 px-5 py-10 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
+                    <label for="password" class="block mt-5 font-semibold text-white">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Password" class="six border w-full h-5 px-3 py-10 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md font-serif" required>
+                    <button type="submit" id="roundButton" class="mt-6 w-full bg-cyan-400 text-white py-3.5 px-8 rounded-md hover:bg-cyan-400 font-serif hover:text-indigo-900">Login</button>
+                </form>
+                <!-- <div class="h-2 bg-green-400 rounded-t-md"></div> -->
+            </div>
+            <div class="mt-4">
+                <a href="/signup" class="round text-lg hover:text-cyan-400 font-serif hover:text-indigo-900 text-red-400">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
