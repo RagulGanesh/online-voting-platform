@@ -55,25 +55,25 @@ app.use(passport.session());
 //use passport for admin
 //authentication for admin
 passport.use(
-  "Admin",
+  "admin_local",
   new LocalStratergy(
     {
       usernameField: "email",
       passwordField: "password",
     },
-    (username, password, done) => {
+    function (username, password, done) {
       console.log("Hello world!!!");
       adminModel.findOne({ where: { email: username } })
         .then(async (user) => {
-          const result = await bcrypt.compare(password, user.password);
-          if (result) {
+          const results = await bcrypt.compare(password, user.password);
+          if (results) {
             return done(null, user);
           } else {
             done(null, false, { message: "It's an invalid password!!!" });
           }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          console.log(error);
           return done(null, false, { message: "It's an invalid email-id!!!" });
         });
     }
@@ -83,23 +83,23 @@ passport.use(
 //use password as voter
 //authentication for voter
 passport.use(
-  "Voter",
+  "voter_local",
   new LocalStratergy(
     {
       usernameField: "voterid",
       passwordField: "password",
     },
-    (username, password, done) => {
+    function (username, password, done) {
       voterModel.findOne({ where: { voterid: username } })
         .then(async (user) => {
-          const result = await bcrypt.compare(password, user.password);
-          if (result) {
+          const results = await bcrypt.compare(password, user.password);
+          if (results) {
             return done(null, user);
           } else {
             return done(null, false, { message: "It's an invalid password!!!" });
           }
         })
-        .catch(() => {
+        .catch((error) => {
           return done(null, false, { message: "It's an invalid voter-id!!!" });
         });
     }
@@ -170,7 +170,7 @@ app.get("/elections",
         const elections = await electionModel.getelections(request1.user.id);
         if (request1.accepts("html")) {
           response1.render("elections", {
-            title: "Online Voting Platform",userName: loggedInUser,elections,
+            title: "Online E-Voting Platform",userName: loggedInUser,elections,
           });
         } else {
           return response1.json({elections,});
@@ -255,7 +255,7 @@ app.get("/e/:url/voter", async function (request4, response4) {
 //start the session for admin
 //if failed redirect to /login else redirect to /elections
 app.post("/session",
-  passport.authenticate("Admin", {
+  passport.authenticate("admin_local", {
     failureRedirect: "/login",
     failureFlash: true,
   }),
@@ -268,7 +268,7 @@ app.post("/session",
 //this is the post route where the voter can login
 //authencticate the voter if true redirect to /e/url(the one posted by user)
 app.post("/e/:url/voter",
-  passport.authenticate("Voter", {
+  passport.authenticate("voter_local", {
     failureRedirect: "/e/${request5.params.url}/voter",
     failureFlash: true,
   }),
@@ -924,7 +924,12 @@ app.get("/e/:url/", async function (requestaa, responseaa){
 //success page
 app.get("/success",async function(req,res){
   res.render("success_page");
-})
+});
+
+//results page
+app.get("/results_page",async function(req,res){
+  res.render("results_page");
+});
 
 //signout
 //this is the route for signing out the user
