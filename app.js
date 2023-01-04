@@ -827,10 +827,10 @@ app.get("/elections/:electionID/preview",
           );
           if (question_options.length < 2) {
             requestl.flash(
-              "error","Make sure there should be atleast two options in each question!!!"
+              "error","Make sure to please add atleast two options to the question below!!!"
             );
             requestl.flash(
-              "error","Make sure to please add atleast two options to the question below!!!"
+              "error","Make sure there should be atleast two options in each question!!!"
             );
             return responsel.redirect(
               `/elections/${requestl.params.electionID}/questions/${questions[question].id}`
