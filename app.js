@@ -52,34 +52,6 @@ app.use((request, response, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-//use passport for admin
-//authentication for admin
-passport.use(
-  "admin_local",
-  new LocalStratergy(
-    {
-      usernameField: "email",
-      passwordField: "password",
-    },
-    function (username, password, done) {
-      console.log("Hello world!!!");
-      adminModel.findOne({ where: { email: username } })
-        .then(async (user) => {
-          const results = await bcrypt.compare(password, user.password);
-          if (results) {
-            return done(null, user);
-          } else {
-            done(null, false, { message: "It's an invalid password!!!" });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          return done(null, false, { message: "It's an invalid email-id!!!" });
-        });
-    }
-  )
-);
-
 //use password as voter
 //authentication for voter
 passport.use(
@@ -105,6 +77,34 @@ passport.use(
     }
   )
 );
+
+//use passport for admin
+//authentication for admin
+passport.use(
+  "admin_local",
+  new LocalStratergy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    function (username, password, done) {
+      adminModel.findOne({ where: { email: username } })
+        .then(async (user) => {
+          const results = await bcrypt.compare(password, user.password);
+          if (results) {
+            return done(null, user);
+          } else {
+            done(null, false, { message: "It's an invalid password!!!" });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          return done(null, false, { message: "It's an invalid email-id!!!" });
+        });
+    }
+  )
+);
+
 
 //serializing user using passport
 passport.serializeUser((user, done) => {
