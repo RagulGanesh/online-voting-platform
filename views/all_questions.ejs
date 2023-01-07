@@ -85,12 +85,13 @@
                                           <?xml version="1.0" encoding="UTF-8"?><svg width="45" height="45" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M42 26V40C42 41.1046 41.1046 42 40 42H8C6.89543 42 6 41.1046 6 40V8C6 6.89543 6.89543 6 8 6L22 6" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 26.7199V34H21.3172L42 13.3081L34.6951 6L14 26.7199Z" fill="none" stroke="#333" stroke-width="1" stroke-linejoin="round"/></svg>
                                         <a href="/elections/<%= id %>/questions/<%= questions[i].id %>" class="text-lg font-serif">?Edit this option</a>
                                     </div>
-                                    <% if ((questions.length) > 1) { %>
+                                    
                                     <div class="rounded w-fir px-2 py-1 flex gap-2 cursor-pointer hover:text-cyan-600">                                     
                                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                                         <a onclick="deleteQuestions({electionID: <%= id %>, questionID: <%= questions[i].id %>})" class="text-sm font-serif hover:text-indigo-900">>Delete this question</a>
                                     </div>
-                                    <% } %>
+                                    <!-- <% if ((questions.length) > 1) { %> -->
+                                    <!-- <% } %> -->
                                 </div>
                             </div>
                         </li>

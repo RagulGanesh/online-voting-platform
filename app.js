@@ -529,7 +529,8 @@ app.delete("/elections/:electionID/questions/:questionID",
         const numq = await questionsModel.getNumberOfQuestionss(
           request7.params.electionID
         );
-        if (numq > 1) {
+        //update here
+        if (numq > 0) {
           //to delete a question
           const res1 = await questionsModel.deleteAQuestion(request7.params.questionID);
           return response7.json({ success: res1 === 1 });
